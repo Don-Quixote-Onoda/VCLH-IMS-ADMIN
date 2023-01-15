@@ -40,14 +40,14 @@ class InnManagerController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'inn_name' => 'required',
-            'number_of_rooms' => 'required',
-            "lat" => 'required',
-            "long" => 'required',
-            "freebies" => 'required',
-            'inn_image' => 'image|nullable|max:1999'
-        ]);
+        // $this->validate($request, [
+        //     'inn_name' => 'required',
+        //     'number_of_rooms' => 'required',
+        //     "lat" => 'required',
+        //     "long" => 'required',
+        //     "freebies" => 'required',
+        //     'inn_image' => 'image|nullable|max:1999'
+        // ]);
 
         if($request->hasFile('inn_image')) {
             $filenameWithExt = $request->file('inn_image');
