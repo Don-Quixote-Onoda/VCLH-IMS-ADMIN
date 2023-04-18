@@ -47,12 +47,17 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Name</label>
                             <input type="text" name="inn_name" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
+                                aria-describedby="emailHelp" value="{{old('inn_name')}}" required>
+                                @error('inn_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Number of Rooms</label>
                             <input type="number" name="number_of_rooms" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp">
+                                aria-describedby="emailHelp" value="{{old('number_of_rooms')}}" required>
                         </div>
                         <input type="hidden" name="long" id="long">
                         <input type="hidden" name="lat" id="lat">
@@ -136,7 +141,7 @@
                             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAI7Grnpn1EBZ9cyeeKhjcQcYe0LwGuZk&callback=initMap"></script>
 
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <select class="form-control tags-select w-75 d-inline" name="freebies[]"
                                 multiple="multiple">
                                 @if (count($freebies) > 0)
@@ -149,8 +154,12 @@
                                 data-bs-target="#addFreebies">
                                 +
                             </button>
-                        </div>
-
+                        </div> --}}
+                        @error('lat')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>Location is required.</strong>
+                                </span>
+                        @enderror
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Image</label>

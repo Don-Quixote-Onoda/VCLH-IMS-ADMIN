@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\Freebie;
 use App\Models\User;
 use App\Models\Transaction;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -22,8 +23,10 @@ class InnController extends Controller
     {
     $inns = Inn::latest()->get();
     $freebies = Freebie::all();
+    $reservation = Reservation::all();
     return view('admin.inns.index')
     ->with('inns', $inns)
+    ->with('reservations', $reservation)
     ->with('freebies', $freebies);
     }
 
@@ -98,11 +101,13 @@ class InnController extends Controller
         $rooms = Room::select('*')->where('inn_id', $id)->get();
         $freebies = Freebie::all();
         $transactions = Transaction::all();
+        $reservations = Reservation::all();
 
         return view('admin.inns.show')
         ->with('inn', $inn)
         ->with('freebies', $freebies)
         ->with('transactions', $transactions)
+        ->with('reservations', $reservations)
         ->with('rooms', $rooms);
     }
 

@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="{{ asset('welcome_assets/plugins/owl-carousel/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('welcome_assets/plugins/magnific-popup/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('welcome_assets/plugins/animated-text/animated-text.css') }}">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <!-- Main Stylesheet -->
     <link href="{{ asset('welcome_assets/css/style.css') }}" rel="stylesheet">
 
@@ -58,6 +59,15 @@
                     <h2 class="mb-2 ">{{ $inn->inn_name }}</h2>
                     <p class="mb-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, totam
                         ipsa quia hic odit a sit laboriosam voluptatem in, blanditiis.</p>
+                </div>
+                <div class="col-lg-6">
+                    @if ($inn->inn_image == 'noimage.jpg')
+                                        <img src="{{asset('/image/noimage.png')}}"
+                                        alt="portfolio-image" class="img-fluid w-100 d-block">
+                                        @else
+                                        <img src="/storage/inns/inns_images/{{ $inn->inn_image }}"
+                                        alt="portfolio-image" class="img-fluid w-100 d-block">
+                                        @endif
                 </div>
             </div>
         </div>
@@ -99,13 +109,60 @@
                                                         @endforeach
                                                     @endif
                                                 </p>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="bg-white p-2 w-100 d-block border-0" data-bs-toggle="modal"
+                                                data-bs-target="#addNewReservation">Make Reservation</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal fade" id="addNewReservation" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content bg-secondary">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Add New Reservation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-sm-12 col-xl-12">
+                                        <div class="bg-secondary rounded h-100 p-4">
+                                            <form action="{{ route('reservations.store') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="inn_id" value="{{ $inn->id }}">
+                                                <input type="hidden" name="room_id" value="{{ $room->id }}">
+                                                <div>
+                                                   <div class="mb-3">
+                                                       <label for="" class="mb-2">Enter reservation date: </label>
+                                                       <input type="date" name="reservationDate" class="form-control mb-3"/>
+                                                   </div>
+                                                   <div class="mb-3">
+                                                       <label for="" class="mb-2">Enter reservee name: </label>
+                                                       <input type="text" name="name" class="form-control mb-3"/>
+                                                   </div>
+                                                   <div class="mb-3">
+                                                       <label for="" class="mb-2">Enter contact number: </label>
+                                                       <input type="number" name="contactNumber" class="form-control mb-3"/>
+                                                   </div>
+                                                       
+                                               </div>
+                                               
+                                               
+                                               
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
+                @else
+                    <h3>No rooms available.</h3>
                 @endif
 
             </div>
@@ -117,7 +174,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="mb-5 ">
-                    <label for="exampleInputEmail1" class="form-label">Location</label>
+                    <h3 for="exampleInputEmail1" class="form-h3">Location</h3>
                     <div id="map" style="height:500px; width: 100%;" class="my-3"></div>
                 </div>
             </div>
@@ -276,5 +333,6 @@
     </script>
     <!-- Main Script -->
     <script src="js/script.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 </html>

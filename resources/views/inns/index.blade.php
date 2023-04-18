@@ -68,8 +68,14 @@
                             <a href="/inns/{{ $inn->id }}">
                                 <div class="position-relative inner-box">
                                     <div class="image position-relative inn-image">
+                                        @if ($inn->inn_image == 'noimage.jpg')
+                                        <img src="{{asset('/image/noimage.png')}}"
+                                        alt="portfolio-image" class="img-fluid w-100 d-block">
+                                        @else
                                         <img src="/storage/inns/inns_images/{{ $inn->inn_image }}"
-                                            alt="portfolio-image" class="img-fluid w-100 d-block">
+                                        alt="portfolio-image" class="img-fluid w-100 d-block">
+                                        @endif
+                                        
                                         <div class="overlay-box">
                                             <div class="overlay-inner">
                                                 <div class="overlay-content">

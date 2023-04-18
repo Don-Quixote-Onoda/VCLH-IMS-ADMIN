@@ -28,6 +28,7 @@
                         <a href="/admin/inns-admin"
                             class="nav-item nav-link {{ request()->is('admin/inns-admin') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Inns</a>
+                                
                     @endif
                     @if (Auth::user()->role == 2)
                         <a href="/user/dashboard"
@@ -39,6 +40,9 @@
                         <a href="/user/transactions-manager"
                             class="nav-item nav-link {{ request()->is('user/transactions-manager') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Transactions</a>
+                                <a href="/user/reservations-manager"
+                            class="nav-item nav-link {{ request()->is('user/reservations-manager') ? 'active' : '' }}"><i
+                                class="fa fa-tachometer-alt me-2"></i>Reservation</a>
                     @endif
                 </div>
             </nav>

@@ -40,14 +40,12 @@ class InnManagerController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'inn_name' => 'required',
-        //     'number_of_rooms' => 'required',
-        //     "lat" => 'required',
-        //     "long" => 'required',
-        //     "freebies" => 'required',
-        //     'inn_image' => 'image|nullable|max:1999'
-        // ]);
+        $this->validate($request, [
+            'inn_name' => 'required',
+            'number_of_rooms' => 'required',
+            "lat" => 'required',
+            "long" => 'required',
+        ]);
 
         if($request->hasFile('inn_image')) {
             $filenameWithExt = $request->file('inn_image');
@@ -67,11 +65,11 @@ class InnManagerController extends Controller
         $inn->lat = $request->lat;
         $inn->long = $request->long;
 
-        $input = $request->all();
-        $freebies = $input['freebies'];
-        $input['freebies'] = implode(',', $freebies);
+        // $input = $request->all();
+        // $freebies = $input['freebies'];
+        // $input['freebies'] = implode(',', $freebies);
 
-        $inn->freebies = $input['freebies'];
+        $inn->freebies = '';
         $inn->user_id = Auth::user()->id;
         $inn->inn_image =  $filenameToStore;
         $inn->save();

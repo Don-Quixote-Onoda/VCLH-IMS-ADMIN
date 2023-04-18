@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 
 Route::resource('/inns','ViewersController');
-
+Route::resource('reservations', 'ReservationGuestController');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin','auth']], function
     Route::resource('users-admin', 'UserController');
     Route::resource('freebies-admin', 'FreebiesController');
     Route::resource('rooms-admin', 'RoomControllers');
+    Route::resource('reservations-admin', 'ReservationController');
     Route::resource('room_rates-admin', 'RoomRatesController');
     Route::get('add-room-admin/{id}', 'RoomControllers@addRoom');
     Route::resource('transactions-admin', 'TransactionController');
@@ -48,4 +49,5 @@ Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function()
     Route::resource('room-rates-manager', 'RoomRatesManagerController');
     Route::resource('freebies-manager', 'FreebiesManagerController');
     Route::resource('transactions-manager', 'TransactionManagerController');
+    Route::resource('reservations-manager', 'ReservationManagerController');
 }); 

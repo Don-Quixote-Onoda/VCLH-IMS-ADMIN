@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
-class UserController extends Controller
+class ReservationGuestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->where('role', 2)->get();
-        return view('admin.users.index')->with('users', $users);
-        
+        //
     }
 
     /**
@@ -38,7 +37,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Reservation::create([
+            'day_of_reservation' => $request->reservationDate,
+            'name' => $request->name,
+            'contact_number' => $request->contactNumber,
+            'inn_id' => $request->inn_id,
+            'room_id' => $request->room_id,
+        ]);
+        return redirect()->back()->with('success', 'Added Successfully!');
     }
 
     /**
@@ -47,18 +53,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        $user = User::find($id);
-        if($user->status == '1') {
-            $user->status = 0;
-        }else{
-            $user->status = 1;
-        }
-        $user->save();
-
-
-        return redirect()->back();
+        //
     }
 
     /**
@@ -69,7 +66,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return 'll';
+        //
     }
 
     /**
@@ -81,7 +78,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $id;
+        //
     }
 
     /**

@@ -138,7 +138,7 @@
                             <input type="text" class="form-control" id="floatingText" placeholder="Name" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                             <label for="floatingText">Name</label>
                             @error('name')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
@@ -147,13 +147,13 @@
                             <input type="email" class="form-control" id="floatingInput" placeholder="Email"  name="email" value="{{ old('email') }}" required autocomplete="email">
                             <label for="floatingInput">Email address</label>
                             @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                             @enderror
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required autocomplete="new-password">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" value="{{ old('password') }}" required autocomplete="new-password">
                             <label for="floatingPassword">Password</label>
                             @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -166,7 +166,7 @@
                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password_confirmation" required autocomplete="new-password">
                             <label for="floatingPassword">Confirm Password</label>
                             @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback d-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                             @enderror
