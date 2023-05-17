@@ -1,53 +1,53 @@
 @extends('layout.app')
 @section('content')
 
-    <div class="container-fluid mt-3">
+    <div class="container-fluid pt-4 px-4">
         {{-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewInn">Add New Inn</button> --}}
         <a href="/admin/inns-admin/create" class="btn btn-outline-primary">Add New Inn</a>
         <div class="row mt-3">
             <div class="col-sm-12 col-xl-12">
                 <div class="bg-secondary rounded h-100 p-4">
                     <h6 class="mb-4">Inns Table</h6>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Number of Rooms</th>
-                                    <th scope="col">Freebie</th>
-                                    <th scope="col" colspan="3">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (count($inns) > 0)
-                                    @foreach ($inns as $inn)
-                                        <tr>
-                                            <td>{{ $inn->inn_name }}</td>
-                                            <td>{{ $inn->number_of_rooms }}</td>
-                                            <td>{{ $inn->freebies }}</td>
-                                            <td>
-                                                <a href="/admin/inns-admin/{{ $inn->id }}"
-                                                    class="btn btn-success">Show</a>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Number of Rooms</th>
+                                        <th scope="col">Freebie</th>
+                                        <th scope="col" colspan="3">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (count($inns) > 0)
+                                        @foreach ($inns as $inn)
+                                            <tr>
+                                                <td>{{ $inn->inn_name }}</td>
+                                                <td>{{ $inn->number_of_rooms }}</td>
+                                                <td>{{ $inn->freebies }}</td>
+                                                <td>
+                                                    <a href="/admin/inns-admin/{{ $inn->id }}"
+                                                        class="btn btn-success">Show</a>
 
-                                            </td>
-                                            <td>
-                                                <a href="/admin/inns-admin/{{ $inn->id }}/edit"
-                                                    class="btn btn-success">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/inns-admin/{{ $inn->id }}/edit"
+                                                        class="btn btn-success">Edit</a>
 
-                                            </td>
-                                            <td>
-                                                <form action="/admin/inns-admin/{{ $inn->id }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger d-inline">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
+                                                </td>
+                                                <td>
+                                                    <form action="/admin/inns-admin/{{ $inn->id }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-danger d-inline">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
             </div>
         </div>

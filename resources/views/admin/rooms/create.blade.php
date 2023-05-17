@@ -15,9 +15,10 @@
                     </div>
                     <input type="hidden" name="inn_id" value="{{$inn->id}}">
                     <div class="mb-3">
-                        <select name="status" class="form-select mb-3" aria-label="Default select example">
+                    <select name="status" class="form-select mb-3" aria-label="Default select example">
                             <option value="">Select Status</option>
-                            <option value="0" selected>Un-Occcupied</option>
+                            <option value="1">Occcupied</option>
+                            <option value="0">Un-Occcupied</option>
                         </select>
                     </div>
                     <div class="mb-3">

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Thomson-Minimal Portfolio Temaplate</title>
+    <title>VCWAMS</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +23,9 @@
     <!-- Main Stylesheet -->
     <link href="{{ asset('welcome_assets/css/style.css') }}" rel="stylesheet">
 
+    <!-- cdn for bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -33,7 +36,7 @@
     <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('welcome_assets/images/logo.png') }}" alt="" class="img-fluid">
+            <img src="{{asset('welcome_assets/images/logo final.png')}}" alt="" class="img-fluid">
             </a>
 
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
@@ -55,6 +58,8 @@
 
     <!-- Navigation ENd -->
 
+    <!-- <h2 class="text-center mt-2">Accomodation Search</h2>
+    <input type="text" class="form-control mt-3 mx-auto" id="myinput" placeholder="Input Search" style="width: 30%;"> -->
 
     <!-- POrtfolio start -->
     <section class="portfolio ">
@@ -108,8 +113,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h2 class="mb-2 ">Core Services.</h2>
-                    <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, totam
-                        ipsa quia hic odit a sit laboriosam voluptatem in, blanditiis.</p>
+                    <p class="mb-5 text-justify[">VALENCIA CITY WEB-BASED ACCOMMODATION MANAGEMENT SYSTEM simplifies the accomodation search and booking process by providing a centralized platform where users can compare prices and access comprehensive information about various hotels. VCWAMS aims to help travelers find the best accomodation deals that suit their needs and preferences.</p>
                 </div>
             </div>
 
@@ -159,15 +163,17 @@
             </div>
         </div>
     </section>
-    <!-- service end -->
+    <!-- service end --> $cman = BarangayOfficial::where('position', 'Barangay Chairman')
+        ->orWhere('position', 'Barangay Captain')
+        ->first();
 
     <!-- Footer start -->
     <section class="footer">
         <div class="container">
             <div class="row ">
                 <div class="col-lg-6">
-                    <p class="mb-0">Copyrights © 2019. Designed & Developed by <a href="/"
-                            class="text-white">Themefisher</a></p>
+                    <p class="mb-0">Copyrights © 2023. Central Mindanao University <a href="/"
+                            class="text-white">VCWAMS</a></p>
                 </div>
                 <div class="col-lg-6">
                     <div class="widget footer-widget text-lg-right mt-5 mt-lg-0">

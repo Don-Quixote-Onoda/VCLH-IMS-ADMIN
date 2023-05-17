@@ -59,6 +59,23 @@ class ReservationController extends Controller
     {
     }
 
+    public function updateStatus(Request $request, Reservation $reservation)
+    {
+        $newStatus = $request->input('status'); // Retrieve the new status from the request
+        
+        $statusOptions = Reservation::getStatusOptions();
+        
+        if (array_key_exists($newStatus, $statusOptions)) {
+            $reservation->status = $newStatus;
+            $reservation->save();
+            
+            return redirect('user/reservations-manager/')->with('success', 'Added Successfully!');
+        } else {
+            return response()->json(['error' => 'Invalid status provided.'], 400);
+        }
+    }
+    
+    
     /**
      * Show the form for editing the specified resource.
      *

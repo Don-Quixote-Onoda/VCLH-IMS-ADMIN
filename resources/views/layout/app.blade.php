@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Valencia City Lodging House</title>
+    <title>VCWAMS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -42,24 +42,25 @@
             </div>
         </div>
         <!-- Spinner End -->
+ <!-- Spinner End -->
 
 
-        @include('includes.sidebar')
+ @include('includes.sidebar')
 
 
-        <!-- Content Start -->
-        <div class="content">
-           
-            @include('includes.header')
+<!-- Content Start -->
+<div class="content">
+   
+    @include('includes.header')
 
-            @yield('content')
+    @yield('content')
 
-            @include('includes.footer')
-        </div>
-        <!-- Content End -->
+    @include('includes.footer')
+</div>
+<!-- Content End -->
 
 
-        <!-- Back to Top -->
+<!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 

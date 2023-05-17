@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Thomson-Minimal Portfolio Temaplate</title>
+    <title>VCWAMS</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@
     <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="{{ asset('welcome_assets/images/logo.png') }}" alt="" class="img-fluid">
+            <img src="{{asset('welcome_assets/images/logo final.png')}}" alt="" class="img-fluid">
             </a>
 
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
@@ -57,8 +57,8 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h2 class="mb-2 ">{{ $inn->inn_name }}</h2>
-                    <p class="mb-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, totam
-                        ipsa quia hic odit a sit laboriosam voluptatem in, blanditiis.</p>
+                    <!-- <p class="mb-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus, totam
+                        ipsa quia hic odit a sit laboriosam voluptatem in, blanditiis.</p> -->
                 </div>
                 <div class="col-lg-6">
                     @if ($inn->inn_image == 'noimage.jpg')
@@ -289,8 +289,8 @@
         <div class="container">
             <div class="row ">
                 <div class="col-lg-6">
-                    <p class="mb-0">Copyrights © 2019. Designed & Developed by <a href="/"
-                            class="text-white">Themefisher</a></p>
+                <p class="mb-0">Copyrights © 2023. Central Mindanao University <a href="/"
+                            class="text-white">VCWAMS</a></p>
                 </div>
                 <div class="col-lg-6">
                     <div class="widget footer-widget text-lg-right mt-5 mt-lg-0">

@@ -2,7 +2,7 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
+                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>VCWAMS</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -40,9 +40,29 @@
                         <a href="/user/transactions-manager"
                             class="nav-item nav-link {{ request()->is('user/transactions-manager') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Transactions</a>
-                                <a href="/user/reservations-manager"
+                        <a href="/user/reservations-manager"
                             class="nav-item nav-link {{ request()->is('user/reservations-manager') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Reservation</a>
+                        
+                        
+                        <a class="dropdown nav-item nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i
+                                class="fa fa-tachometer-alt me-2"></i>POS/Inv
+                            <i class="fa fa-caret-down bg-transparent"></i>
+                            
+                        </a>
+                        <a class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}" id="collapseExample">
+                             Category
+                        </a>
+                        <a class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}" id="collapseExample">
+                             Products
+                        </a>
+
+                        
+
+    </a>     
+                        
+
+                            
                     @endif
                 </div>
             </nav>

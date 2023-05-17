@@ -57,9 +57,11 @@
                         <b>24/7 Update.</b>
                     </span>
                 </h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>Cumque consectetur recusandae aliquid provident earum? Enim dicta tenetur.</p>
+                <p>Discover the Perfect Inn with Valencia City Inn & Lodging House Finder. <br>Book Your Dream Stay in Valencia City. Experience Unmatched Comfort and Luxury.</p>
                 <a href="{{route('login')}}" class="btn btn-secondary rounded">Start Now!</a>
 			
+
+				<!-- <a href="/inns" class="btn btn-secondary rounded">Start Now!</a> -->
             </div>
 		</div>
 	</div>

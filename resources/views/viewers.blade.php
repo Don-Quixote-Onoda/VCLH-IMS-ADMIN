@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Valencia City Lodging House Finder Website</title>
+  <title>VCWAMS</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +33,8 @@
 <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
 	<div class="container">
 	  <a class="navbar-brand" href="/">
-	  	<img src="{{asset('welcome_assets/images/logo.png')}}" alt="" class="img-fluid">
+	  	<img src="{{asset('welcome_assets/images/logo final.png')}}" alt="" class="img-fluid">
+		  
 	  </a>
 
 	  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,13 +67,41 @@
                         <b>24/7 Update.</b>
                     </span>
                 </h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>Cumque consectetur recusandae aliquid provident earum? Enim dicta tenetur.</p>
+                <p>Discover the Perfect Accomodation in Valencia City. <br>Book Your Dream Stay. Experience Unmatched Comfort and Luxury.</p>
                 <a href="/inns" class="btn btn-secondary rounded">Start Now!</a>
 			
             </div>
 		</div>
 	</div>
 </section>
+
+<!-- <section class="section banner">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				 <h2 class="cd-headline clip is-full-width mb-4 ">
+				 	We provide <br>
+                    <span class="cd-words-wrapper text-color">
+                        <b class="is-visible">Faster Transactions. </b>
+                        <b>Convenience.</b>
+                        <b>24/7 Update.</b>
+                    </span>
+                </h2>
+                <p>Discover the Perfect Lodge in Valencia City. <br>Book Your Dream Stay. Experience Unmatched Comfort and Luxury.</p>
+                <a href="/inns" class="btn btn-secondary rounded">Start Now!</a>
+			
+            </div>
+			<div class="col-lg-4">
+				<h1>Kayat King</h1>
+				<a class="navbar-brand" href="https://www.facebook.com/lazaro.camanero">
+	  				<img src="{{asset('welcome_assets/images/doytik.png')}}" alt="" class="img-fluid">
+		  			
+	  			</a>
+			</div>
+		</div>
+		
+	</div>
+</section> -->
 
 <!-- Banner End -->
 
@@ -82,7 +111,8 @@
 	<div class="container">
 		<div class="row ">
 			<div class="col-lg-6">
-				<p class="mb-0">Copyrights © 2022. Designed & Developed by <a href="/" class="text-white">Themefisher</a></p>
+			<p class="mb-0">Copyrights © 2023. Central Mindanao University <a href="/"
+                            class="text-white">VCWAMS</a></p>
 			</div>
 			<div class="col-lg-6">
 				<div class="widget footer-widget text-lg-right mt-5 mt-lg-0">

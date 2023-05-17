@@ -66,6 +66,7 @@ class InnController extends Controller
             $filenameToStore = $filename.'_'.time().'.'.$extension;
 
             $path = $request->file('inn_image')->storeAs('public/inns/inns_images', $filenameToStore);
+            
         }
         else {
             $filenameToStore = 'noimage.jpg';

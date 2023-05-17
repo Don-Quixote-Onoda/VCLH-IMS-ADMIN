@@ -50,4 +50,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function()
     Route::resource('freebies-manager', 'FreebiesManagerController');
     Route::resource('transactions-manager', 'TransactionManagerController');
     Route::resource('reservations-manager', 'ReservationManagerController');
+    Route::post('/user/reservations/{reservation}/update-status', 'ReservationController@updateStatus')->name('updateStatus');
+
 }); 

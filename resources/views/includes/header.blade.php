@@ -11,12 +11,12 @@
      </form>
      <div class="navbar-nav align-items-center ms-auto">
          <div class="nav-item dropdown">
-             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+             <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                  <i class="fa fa-envelope me-lg-2"></i>
                  <span class="d-none d-lg-inline-flex">Message</span>
-             </a>
+             </a> -->
              <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                 <a href="#" class="dropdown-item">
+                 <!-- <a href="#" class="dropdown-item">
                      <div class="d-flex align-items-center">
                          <img class="rounded-circle" src="{{ asset('admin_assets/img/user.jpg') }}" alt=""
                              style="width: 40px; height: 40px;">
@@ -73,7 +73,7 @@
                      <small>15 minutes ago</small>
                  </a>
                  <hr class="dropdown-divider">
-                 <a href="#" class="dropdown-item text-center">See all notifications</a>
+                 <a href="#" class="dropdown-item text-center">See all notifications</a> -->
              </div>
          </div>
          <div class="nav-item dropdown">
