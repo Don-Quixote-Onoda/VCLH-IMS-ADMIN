@@ -10,23 +10,31 @@ class Room extends Model
     use HasFactory;
 
     protected $table = 'rooms';
-    public $primaryKey = 'id';
-    public $timestamp = true;
+    protected $primaryKey = 'id';
+    public $timestamps = true;
 
-    public function inn() {
+    public function inn()
+    {
         return $this->belongsTo('App\Models\Inn');
     }
 
-    public function freebie() {
+    public function freebie()
+    {
         return $this->belongsTo('App\Models\Freebie');
     }
 
-    public function transactions() {
+    public function transactions()
+    {
         return $this->hasMany('App\Models\Transaction');
     }
 
-    public function room_rates() {
-        return $this->hasMany('App\Models\RoomRate');
+    public function roomRate()
+    {
+        return $this->belongsTo('App\Models\RoomRate');
     }
-
+    public function room_rates()
+{
+    return $this->hasMany(RoomRate::class);
 }
+}
+

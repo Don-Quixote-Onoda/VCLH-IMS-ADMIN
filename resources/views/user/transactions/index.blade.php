@@ -1,8 +1,8 @@
 @extends('layout.app')
-@section('content')
 
+@section('content')
     <div class="row d-flex justify-content-center mt-5">
-        <div class="col-11 ">
+        <div class="col-11">
             <div class="bg-secondary rounded h-100 p-4">
                 <h1>{{ $inns[0]->inn_name }}</h1>
                 <h2>Number of Rooms: {{ $inns[0]->number_of_rooms }}</h2>
@@ -18,6 +18,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">username</th>
+                                        <th scope="col">reservee</th>
                                         <th scope="col">lodging house / inn name</th>
                                         <th scope="col">room number</th>
                                         <th scope="col">freebie</th>
@@ -31,18 +32,16 @@
                                         @foreach ($transactions as $transaction)
                                             <tr>
                                                 <td>{{ $transaction->user->name }}</td>
+                                                <td>{{ $transaction->customer_name }}</td>
                                                 <td>{{ $transaction->inn->inn_name }}</td>
                                                 <td>{{ $transaction->room->room_number }}</td>
                                                 <td>{{ $transaction->room->freebies }}</td>
                                                 <td>{{ $transaction->room_rate->number_of_hours }} hours</td>
                                                 <td>PHP{{ $transaction->room_rate->rate }}</td>
                                                 <td>
-                                                    <a href="/admin/transactions-admin/{{ $transaction->id }}"
-                                                        class="btn btn-success">Print</a>
-
+                                                    <a href="/user/transactions-manager/{{ $transaction->id }}/print"
+                                                        class="btn btn-success" target="_blank" >Print Invoice</a>
                                                 </td>
-                                                <td>
-
                                             </tr>
                                         @endforeach
                                     @endif
@@ -76,4 +75,7 @@
                         </div>
                     </div>
                 </div>
-            @endsection
+            </div>
+        </div>
+    </div>
+@endsection

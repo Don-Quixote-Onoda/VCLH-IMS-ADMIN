@@ -26,7 +26,7 @@ class ReservationManagerController extends Controller
         $rooms = Room::select('*')->where('inn_id', $inns[0]->id)->get();
         $freebies = Freebie::all();
         $transactions = Transaction::latest()->get();
-        $reservations = Reservation::latest()->get();
+        $reservations = Reservation::where('inn_id', $inns[0]->id)->get();
         $inn = Inn::where('user_id', Auth::user()->id)->get();
 
         return view('user.reservations.index')
@@ -48,6 +48,26 @@ class ReservationManagerController extends Controller
     {
         //
     }
+    public function updateStatus(Request $request, $id)
+        {
+            $reservation = Reservation::findOrFail($id);
+            $reservation->status = $request->status;
+            $reservation->save();
+            if ($reservation->status === 'confirmed') {
+                // Create a new transaction record and associate it with the reservation
+                $transaction = new Transaction();
+                $transaction->inn_id = $reservation->inn_id;
+                $transaction->room_id = $reservation->room_id;
+                $transaction->room_rate_id = $reservation->room_rate_id;
+                $transaction->user_id = Auth::user()->id;
+                $transaction->customer_name = $reservation->name; 
+    
+                // Associate the transaction with the reservation
+                $reservation->transaction()->save($transaction);
+            }
+
+            return redirect()->back()->with('status', 'Reservation status updated successfully.');
+        }
 
     /**
      * Store a newly created resource in storage.
@@ -63,6 +83,7 @@ class ReservationManagerController extends Controller
             'contact_number' => $request->contactNumber,
             'inn_id' => $request->inn_id,
             'room_id' => $request->room_id,
+            'room_rate_id' => $request->room_rate_id,
         ]);
         return redirect()->back()->with('success', 'Added Successfully!');
     }
@@ -92,7 +113,7 @@ class ReservationManagerController extends Controller
         $reservation = Reservation::find($id);
         return view('user.reservations.edit', [
             'reservation' => $reservation,
-            'rooms' => $rooms
+            'rooms' => $rooms,
         ]);
     }
 
@@ -112,6 +133,7 @@ class ReservationManagerController extends Controller
             'contact_number' => $request->contactNumber,
             'inn_id' => $request->inn_id,
             'room_id' => $request->room_id,
+            'room_rate_id' => $request->room_rate_id,
         ]);
         return redirect('/user/reservations-manager')->with('success', 'Added Successfully!');
     }

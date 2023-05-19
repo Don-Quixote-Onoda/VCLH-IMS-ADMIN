@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\Room;
+use App\Models\RoomRate;
 use Illuminate\Support\Facades\Auth;
 
 class ReservationGuestController extends Controller
@@ -37,12 +39,14 @@ class ReservationGuestController extends Controller
      */
     public function store(Request $request)
     {
+        $roomRate = RoomRate::find($request->room_rate_id);
         Reservation::create([
             'day_of_reservation' => $request->reservationDate,
             'name' => $request->name,
             'contact_number' => $request->contactNumber,
             'inn_id' => $request->inn_id,
             'room_id' => $request->room_id,
+            'room_rate_id' => $request->room_rate_id,
         ]);
         return redirect()->back()->with('success', 'Added Successfully!');
     }

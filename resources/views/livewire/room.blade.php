@@ -8,14 +8,17 @@
         </select>
     </div>
         <div class="mb-3">
-            <select name="room_rate_id" class="form-select mb-3" wire:model="selectedRate" aria-label="Default select example">
-                <option value="">Select Room Rate</option>
-                @if (!is_null($rates))
-                    @foreach ($rates as $rate)
-                        <option value="{{$rate->id}}">{{$rate->number_of_hours}} {{($rate->number_of_hours > 2) ? 'hours' : 'hour'}} - PHP {{$rate->rate}}</option>
-                    @endforeach
-                @endif
-            </select>
+        <label for="room_rate_id" class="col-sm-3 col-form-label">Room Rate</label>
+    <div class="col-sm-9">
+        <select name="room_rate_id" id="roomRateSelect" class="form-select" wire:model="selectedRate">
+            <option value="">Select Room Rate</option>
+            @if (!is_null($rates))
+                @foreach ($rates as $rate)
+                    <option value="{{$rate->id}}">{{$rate->number_of_hours}} {{($rate->number_of_hours > 2) ? 'hours' : 'hour'}} - PHP {{$rate->rate}}</option>
+                @endforeach
+            @endif
+        </select>
+    </div>
         </div>
 </div>
 

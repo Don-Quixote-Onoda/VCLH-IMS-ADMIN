@@ -60,6 +60,15 @@ class TransactionController extends Controller
 
     }
 
+    public function printInvoice($id)
+        {
+            $transaction = Transaction::findOrFail($id);
+            // Fetch other necessary data for the invoice
+
+            return view('transactions.print', compact('transaction'));
+        }
+
+
     /**
      * Display the specified resource.
      *

@@ -23,14 +23,8 @@
                             <input type="number" value="{{$reservation->contact_number}}" name="contactNumber" class="form-control mb-3"/>
                         </div>
                             <div class="mb-3">
-                                <select name="room_id" class="form-select mb-3" aria-label="Default select example">
-                                    <option value="">Select Room Number</option>
-                                    @if (!is_null($rooms))
-                                        @foreach ($rooms as $room)
-                                            <option value="{{$room->id}}" {{($reservation->room_id == $room->id) ? 'selected': ''}}>Room No. {{$room->room_number}} - with {{$room->freebies}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                            
+                                <livewire:room></livewire:room>
                             </div>
                     </div>
                     

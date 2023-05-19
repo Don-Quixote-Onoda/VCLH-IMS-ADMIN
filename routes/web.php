@@ -50,6 +50,21 @@ Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function()
     Route::resource('freebies-manager', 'FreebiesManagerController');
     Route::resource('transactions-manager', 'TransactionManagerController');
     Route::resource('reservations-manager', 'ReservationManagerController');
-    Route::post('/user/reservations/{reservation}/update-status', 'ReservationController@updateStatus')->name('updateStatus');
+    Route::get('/reservations/create', 'ReservationController@create')->name('reservations.create');
+    Route::post('/user/reservations-manager/{reservation}/update-status', 'ReservationController@updateStatus')->name('updateStatus');
+    Route::get('/user/reservations-manager', 'ReservationController@index')->name('reservations-manager.index');
+    Route::get('/transactions-manager/{id}/print', 'TransactionManagerController@printInvoice')->name('transactions-manager.printInvoice');
+    Route::put('/user/reservations-manager/{id}', 'App\Http\Controllers\ReservationManagerController@updateStatus')->name('reservations-manager.updateStatus');
+    Route::get('/admin/transactions-admin/{id}', 'TransactionController@printInvoice')->name('transactions-admin.printInvoice');
+    Route::get('/admin/transactions-admin/{id}/print', 'TransactionController@printInvoice')->name('transactions-admin.print');
+
+    Route::get('/user/transactions-manager/{id}', 'TransactionManagerController@printInvoice')->name('transactions-manager.printInvoice');
+
+    
+
+    
+
+
+
 
 }); 

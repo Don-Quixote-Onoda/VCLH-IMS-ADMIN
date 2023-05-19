@@ -163,9 +163,7 @@
             </div>
         </div>
     </section>
-    <!-- service end --> $cman = BarangayOfficial::where('position', 'Barangay Chairman')
-        ->orWhere('position', 'Barangay Captain')
-        ->first();
+   
 
     <!-- Footer start -->
     <section class="footer">

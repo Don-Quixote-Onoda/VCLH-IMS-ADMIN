@@ -100,7 +100,7 @@
                                                 </p>
                                                 <p>
                                                     {{-- {{ $room->room_rates }} --}}
-                                                    @if (count($room->room_rates) > 0)
+                                                    @if (($room->room_rates))
                                                         @foreach ($room->room_rates as $room_rate)
                                                             <span
                                                                 style="display: block">{{ $room_rate->number_of_hours }}
@@ -134,6 +134,7 @@
                                                 @csrf
                                                 <input type="hidden" name="inn_id" value="{{ $inn->id }}">
                                                 <input type="hidden" name="room_id" value="{{ $room->id }}">
+                                                
                                                 <div>
                                                    <div class="mb-3">
                                                        <label for="" class="mb-2">Enter reservation date: </label>
@@ -147,6 +148,19 @@
                                                        <label for="" class="mb-2">Enter contact number: </label>
                                                        <input type="number" name="contactNumber" class="form-control mb-3"/>
                                                    </div>
+                                                   <div class="mb-3">
+                                                    <label for="room_rate" class="form-label">Select Room Rate:</label>
+                                                    <select class="form-select" name="room_rate_id" id="room_rate_id">
+                                                    @foreach ($room->room_rates as $roomRate)
+                                                        <option value="{{ $roomRate->id }}">
+                                                            {{ $roomRate->number_of_hours }} hours • ₱ {{ $roomRate->rate }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
+                                                   
+
+                                                  
                                                        
                                                </div>
                                                

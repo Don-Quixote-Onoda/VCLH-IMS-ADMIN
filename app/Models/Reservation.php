@@ -10,9 +10,9 @@ class Reservation extends Model
     use HasFactory;
 
     protected $table = 'reservations';
-    public $primaryKey = 'id';
-    public $timestamp = true;
-    
+    protected $primaryKey = 'id';
+    public $timestamps = true;
+
     public static function getStatusOptions()
     {
         return [
@@ -22,27 +22,28 @@ class Reservation extends Model
         ];
     }
 
-
-
     public $fillable = [
-        'day_of_reservation', 
+        'day_of_reservation',
         'name',
         'contact_number',
         'status',
         'inn_id',
         'room_id',
+        'room_rate_id',
     ];
 
-    
-   
-
-    public function updateStatus($newStatus)
+    public function transaction()
     {
-        if (in_array($newStatus, $this->statusOptions)) {
-            $this->status = $newStatus;
-            $this->save();
-            return true;
-        }
-        return false;
+        return $this->hasOne('App\Models\Transaction');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo('App\Models\Room');
+    }
+
+    public function roomRate()
+    {
+        return $this->belongsTo('App\Models\RoomRate');
     }
 }

@@ -21,7 +21,12 @@ class Room extends Component
 
     public function updatedSelectedRoom($room_id) {
         $this->rates = RoomRate::where('room_id', $room_id)->get();
+        $this->emit('roomRateSelected', $this->selectedRate);
     }
+    public function updatedSelectedRate($rateId)
+{
+    $this->emit('roomRateSelected', $rateId);
+}
 }
 
 

@@ -1,14 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Dompdf\Dompdf;
+Use PDF;
+use TCPDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Inn;
 use App\Models\Room;
 use App\Models\RoomRate;
 use App\Models\Freebie; 
-use App\Models\Transaction; 
+use App\Models\Transaction;
+use App\Http\Controllers\CustomTCPDF; 
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class TransactionManagerController extends Controller
 {
@@ -23,7 +29,7 @@ class TransactionManagerController extends Controller
         $inns = Inn::select('*')->where('user_id', $id)->get();
         $rooms = Room::select('*')->where('inn_id', $inns[0]->id)->get();
         $freebies = Freebie::all();
-        $transactions = Transaction::latest()->get();
+        $transactions = Transaction::where('inn_id', $inns[0]->id)->get();
         $inn = Inn::where('user_id', Auth::user()->id)->get();
 
         return view('user.transactions.index')
@@ -61,6 +67,7 @@ class TransactionManagerController extends Controller
 
         $transaction = new Transaction;
         $transaction->user_id = Auth::user()->id;
+        $transaction->customer_name = $request->name;
         $transaction->inn_id = $request->inn_id;
         $transaction->room_id = $request->room_id;
         $transaction->status = 1;
@@ -73,6 +80,50 @@ class TransactionManagerController extends Controller
 
         return redirect()->back()->with('success', 'Added Successfully!');
     }
+
+    
+    
+    public function printInvoice($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+
+        // Render the invoice content to HTML with the transaction data
+        $html = View::make('user.transactions.print', compact('transaction'))->render();
+    
+        // Create a new Dompdf instance
+        $pdf = new Dompdf();
+    
+        // Load the HTML content into Dompdf
+        $pdf->loadHtml($html);
+    
+        // Set paper size and orientation (optional)
+        $pdf->setPaper('A4', 'portrait');
+    
+        // Render the PDF
+        $pdf->render();
+    
+        // Generate a unique filename for the PDF
+        $filename = 'invoice_' . $transaction->id . '.pdf';
+    
+        // Store the PDF content to a temporary file
+        $tempFilePath = storage_path('app/temp/' . $filename);
+        file_put_contents($tempFilePath, $pdf->output());
+    
+        // Generate the URL to the temporary file
+        $fileUrl = Storage::url('temp/' . $filename);
+    
+        // Return the response with the PDF file for preview
+        return response()->file($tempFilePath, [
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            'target' => '_blank'
+        ]);
+    
+        
+    
+        
+    }
+    
+
 
     /**
      * Display the specified resource.
