@@ -38,6 +38,32 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin','auth']], function
     Route::resource('room_rates-admin', 'RoomRatesController');
     Route::get('add-room-admin/{id}', 'RoomControllers@addRoom');
     Route::resource('transactions-admin', 'TransactionController');
+    Route::get('inn/dashboard/{id}', 'AdminInnControllers@dashboard');
+    Route::get('inn/rooms/{id}', 'AdminInnControllers@rooms');
+    Route::get('inn/transactions/{id}', 'AdminInnControllers@transactions');
+    Route::get('inn/reservations/{id}', 'AdminInnControllers@reservations');
+    Route::get('inn/products/{id}', 'AdminInnControllers@products');
+    Route::post('inn/products', 'AdminInnControllers@store_products')->name('store_products');
+    Route::get('inn/products/edit/{inn}{id}', 'AdminInnControllers@edit_products')->name('edit_products');
+    Route::put('inn/products/update/{id}', 'AdminInnControllers@update_products')->name('update_products');
+    Route::delete('inn/products/destroy/{inn}{id}', 'AdminInnControllers@destroy_products')->name('destroy_products');
+    Route::get('inn/order_summaries/{id}', 'AdminInnControllers@order_summaries');
+
+    Route::get('inn/product_categories/{id}', 'AdminInnControllers@product_categories');
+    Route::post('inn/product_categories/{id}', 'AdminInnControllers@store_product_categories')->name('store_product_categories');
+    Route::get('inn/product_categories/edit/{inn}{id}', 'AdminInnControllers@edit_product_categories')->name('edit_product_categories');
+    Route::put('inn/product_categories/update/{id}', 'AdminInnControllers@update_product_categories')->name('update_product_categories');
+    Route::delete('inn/product_categories/destroy/{inn}{id}', 'AdminInnControllers@destroy_product_categories')->name('destroy_product_categories');
+    Route::get('inn/inventory_managements/{id}', 'AdminInnControllers@inventory_managements');
+    Route::post('inn/inventory_managements', 'AdminInnControllers@store_inventory_managements')->name('store_inventory_managements');
+    Route::get('inn/inventory_managements/edit/{inn}{id}', 'AdminInnControllers@edit_inventory_managements')->name('edit_inventory_managements');
+    Route::put('inn/inventory_managements/update/{id}', 'AdminInnControllers@update_inventory_managements')->name('update_inventory_managements');
+    Route::delete('inn/inventory_managements/destroy/{inn}{id}', 'AdminInnControllers@destroy_inventory_managements')->name('destroy_inventory_managements');
+    Route::get('inn/order_details/{id}', 'AdminInnControllers@order_details');
+    Route::get('inn/pay_order_summary/{id}', 'AdminInnControllers@pay_order_summary');
+    Route::post('inn/store_order_summary/', 'AdminInnControllers@store_order_summary')->name('store_order_summary');
+    Route::post('inn/order_details/', 'AdminInnControllers@store_order_details')->name('store_order_details');
+    
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function() {

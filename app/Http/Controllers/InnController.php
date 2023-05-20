@@ -109,6 +109,7 @@ class InnController extends Controller
         ->with('freebies', $freebies)
         ->with('transactions', $transactions)
         ->with('reservations', $reservations)
+        ->with('id', $id)
         ->with('rooms', $rooms);
     }
 
