@@ -44,7 +44,11 @@
                 aria-label="Toggle navigation">
                 <span class="ti-align-justify"></span>
             </button>
-
+            <div class="w-100 mx-auto">
+                <form action="{{route('search-inn')}}" method="get" class="d-none w-50 mx-auto d-md-flex">
+                    <input class="form-control bg-white border-1" name="keyword" type="search" placeholder="Search">
+                </form>
+            </div>
             <div class="collapse navbar-collapse" id="navbarsExample09">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
@@ -100,7 +104,10 @@
                             </a>
                         </div>
                     @endforeach
-                @endif
+                
+                    @else
+                        <h1>No search results ...</h1>
+                    @endif
 
             </div>
         </div>

@@ -93,4 +93,13 @@ class ViewersController extends Controller
     {
         //
     }
+
+    public function search(Request $request) {
+
+        $inns = Inn::where('inn_name', 'like', '%' . $request->keyword . '%')->get();
+        $rooms = Room::all();
+        return view('inns.index')
+        ->with('inns', $inns)
+        ->with('rooms', $rooms);
+    }
 }

@@ -36,7 +36,7 @@
 	  	<img src="{{asset('welcome_assets/images/logo final.png')}}" alt="" class="img-fluid">
 		  
 	  </a>
-
+	  
 	  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="ti-align-justify"></span>
 	  </button>

@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 
 Route::resource('/inns','ViewersController');
+Route::get('search','ViewersController@search')->name('search-inn');
 Route::resource('reservations', 'ReservationGuestController');
 Auth::routes();
 
