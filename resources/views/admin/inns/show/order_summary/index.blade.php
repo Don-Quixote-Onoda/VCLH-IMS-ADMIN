@@ -25,8 +25,8 @@
                                             @foreach ($order_summaries as $summary)
                                                 <tr>
                                                     <td>{{ $summary->order_number }}</td>
-                                                    <td>{{ $summary->total_amount }}</td>
-                                                    <td>{{ $summary->payment }}</td>
+                                                    <td>₱{{ number_format($summary->total_amount, 2, '.', ',') }}</td>
+                                                    <td>₱{{ number_format($summary->payment, 2, '.', ',') }}</td>
                                                     {{-- <td>
                                                         <a href="/admin/reservations-admin/{{ $reservation->id }}/edit"
                                                             class="btn btn-success">Edit</a>
