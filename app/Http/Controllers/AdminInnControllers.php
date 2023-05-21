@@ -23,7 +23,7 @@ class AdminInnControllers extends Controller
         $order_summary = OrderSummary::where('inn_id', $id)->where('is_deleted', 0)->get();
         $products = Product::where('inn_id', $id)->where('is_deleted', 0)->get();
 
-        $order_number = count($order_summary) > 0 ? 'vcw-'.$id.'-ams-'.$order_summary->last()->id+1 : 'vcw-9-ams-1';
+        $order_number = count($order_summary) > 0 ? 'vcw-' . $id . '-ams-' . $order_summary->last()->id + 1 : 'vcw-'.$id.'-ams-1';
         $order_details = OrderDetail::where('inn_id', $id)->where('order_number', $order_number)->where('is_deleted', 0)->get();
         $rooms = Room::where('inn_id', $id)->get();
         return view('admin.inns.show.dashboard')
@@ -177,12 +177,8 @@ class AdminInnControllers extends Controller
     }
 
     public function destroy_products(Request $request, string $inn_id, string $id) {
-        $category = Category::find($request->id);
-        $category->update([
-            "is_deleted" => 1
-        ]);
         $product = Product::find($id);
-        $product->delete = 1;
+        $product->is_deleted = 1;
         $product->save();
         $inn = Inn::find($inn_id);
         $products = Product::where('inn_id', $request->id)->where('is_deleted', 0)->get();
@@ -354,6 +350,8 @@ class AdminInnControllers extends Controller
     public function store_order_details(Request $request) {
         
         $product = Product::find($request->product_id);
+        $product->quantity = $product->quantity - $request->quantity;
+        $product->save();
         OrderDetail::create([
             'order_number' => $request->order_number,
             'quantity' => $request->quantity,

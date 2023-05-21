@@ -57,6 +57,7 @@ return array(
     'App\\Models\\Location' => $baseDir . '/app/Models/Location.php',
     'App\\Models\\OrderDetail' => $baseDir . '/app/Models/OrderDetail.php',
     'App\\Models\\OrderSummary' => $baseDir . '/app/Models/OrderSummary.php',
+    'App\\Models\\POS_Transaction' => $baseDir . '/app/Models/POS_Transaction.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\Reservation' => $baseDir . '/app/Models/Reservation.php',
     'App\\Models\\Room' => $baseDir . '/app/Models/Room.php',

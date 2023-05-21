@@ -21,7 +21,7 @@
      
                         <a href="/admin/inn/dashboard/{{$id}}"
                             class="nav-item nav-link {{ request()->is('user/dashboard') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                                class="fa fa-tachometer-alt me-2"></i>POS/Transaction</a>
                         <a href="/admin/inn/rooms/{{$id}}"
                             class="nav-item nav-link {{ request()->is('user/rooms-manager') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Rooms</a>

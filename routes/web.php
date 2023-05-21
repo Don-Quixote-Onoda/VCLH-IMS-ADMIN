@@ -83,11 +83,13 @@ Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function()
     Route::put('/user/reservations-manager/{id}', 'App\Http\Controllers\ReservationManagerController@updateStatus')->name('reservations-manager.updateStatus');
     Route::get('/admin/transactions-admin/{id}', 'TransactionController@printInvoice')->name('transactions-admin.printInvoice');
     Route::get('/admin/transactions-admin/{id}/print', 'TransactionController@printInvoice')->name('transactions-admin.print');
-
     Route::get('/user/transactions-manager/{id}', 'TransactionManagerController@printInvoice')->name('transactions-manager.printInvoice');
-
-    
-
+    Route::resource('products', 'InnProductsController');
+    Route::resource('products-category', 'InnProductsCategoryController');
+    Route::resource('order-details', 'InnOrderDetailsController');
+    Route::resource('order-summary', 'InnOrderSummaryController');
+    Route::resource('inventory-management', 'InnInventoryManagementController');
+    Route::get('pay_order_summary/{id}', 'InnOrderSummaryController@pay_order_summary');
     
 
 

@@ -613,6 +613,7 @@ class ComposerStaticInit78e77670a48034a428c6f9b40acbfb90
         'App\\Models\\Location' => __DIR__ . '/../..' . '/app/Models/Location.php',
         'App\\Models\\OrderDetail' => __DIR__ . '/../..' . '/app/Models/OrderDetail.php',
         'App\\Models\\OrderSummary' => __DIR__ . '/../..' . '/app/Models/OrderSummary.php',
+        'App\\Models\\POS_Transaction' => __DIR__ . '/../..' . '/app/Models/POS_Transaction.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\Reservation' => __DIR__ . '/../..' . '/app/Models/Reservation.php',
         'App\\Models\\Room' => __DIR__ . '/../..' . '/app/Models/Room.php',

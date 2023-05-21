@@ -53,7 +53,7 @@
                     <div class="modal-body">
                         <div class="col-sm-12 col-xl-12">
                             <div class="bg-secondary rounded h-100 p-4">
-                                <form action="{{ route('freebies-admin.store') }}" method="post">
+                                <form action="{{ route('freebies-manager.store') }}" method="post">
                                     @csrf
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Name</label>

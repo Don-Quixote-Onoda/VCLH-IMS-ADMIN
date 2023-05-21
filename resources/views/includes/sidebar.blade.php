@@ -33,7 +33,7 @@
                     @if (Auth::user()->role == 2)
                         <a href="/user/dashboard"
                             class="nav-item nav-link {{ request()->is('user/dashboard') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                                class="fa fa-tachometer-alt me-2"></i>POS/Transaction</a>
                         <a href="/user/rooms-manager"
                             class="nav-item nav-link {{ request()->is('user/rooms-manager') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Rooms</a>
@@ -50,11 +50,26 @@
                             <i class="fa fa-caret-down bg-transparent"></i>
                             
                         </a>
-                        <a class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}" id="collapseExample">
-                             Category
+                        <a href="/user/products/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
+                            id="collapseExample">
+                            Products
                         </a>
-                        <a class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}" id="collapseExample">
-                             Products
+                        <a href="/user/products-category/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
+                            id="collapseExample">
+                            Products Category
+                        </a>
+
+                        <a href="/user/order-details/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
+                            id="collapseExample">
+                            Order Details
+                        </a>
+                        <a href="/user/order-summary/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
+                            id="collapseExample">
+                            Order Summary
+                        </a>
+                        <a href="/user/inventory-management/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
+                            id="collapseExample">
+                            Inventory Management
                         </a>
 
                         
