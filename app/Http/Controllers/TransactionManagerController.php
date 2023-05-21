@@ -64,62 +64,70 @@ class TransactionManagerController extends Controller
             'room_id' => 'required',
             'room_rate_id' => 'required',
         ]);
-
+        
         $transaction = new Transaction;
         $transaction->user_id = Auth::user()->id;
-        $transaction->customer_name = $request->name;
+        $transaction->customer_name = $request->name ?: null; // Assign null if name is empty
         $transaction->inn_id = $request->inn_id;
         $transaction->room_id = $request->room_id;
         $transaction->status = 1;
         $transaction->room_rate_id = $request->room_rate_id;
+        
+        if ($request->has('reservation_id')) {
+            $transaction->reservation_id = $request->reservation_id ?? null;
+        }
+        
         $transaction->save();
-
+        
         $room = Room::find($request->room_id);
         $room->status = 1;
         $room->save();
-
+        
         return redirect()->back()->with('success', 'Added Successfully!');
+        
     }
 
     
     
     public function printInvoice($id)
     {
-        $transaction = Transaction::findOrFail($id);
+       
+            $transaction = Transaction::findOrFail($id);
 
-        // Render the invoice content to HTML with the transaction data
-        $html = View::make('user.transactions.print', compact('transaction'))->render();
-    
-        // Create a new Dompdf instance
-        $pdf = new Dompdf();
-    
-        // Load the HTML content into Dompdf
-        $pdf->loadHtml($html);
-    
-        // Set paper size and orientation (optional)
-        $pdf->setPaper('A4', 'portrait');
-    
-        // Render the PDF
-        $pdf->render();
-    
-        // Generate a unique filename for the PDF
-        $filename = 'invoice_' . $transaction->id . '.pdf';
-    
-        // Store the PDF content to a temporary file
-        $tempFilePath = storage_path('app/temp/' . $filename);
-        file_put_contents($tempFilePath, $pdf->output());
-    
-        // Generate the URL to the temporary file
-        $fileUrl = Storage::url('temp/' . $filename);
-    
-        // Return the response with the PDF file for preview
-        return response()->file($tempFilePath, [
-            'Content-Disposition' => 'inline; filename="' . $filename . '"',
-            'target' => '_blank'
-        ]);
-    
-        
-    
+            // Render the invoice content to HTML with the transaction data
+            $html = View::make('user.transactions.print', compact('transaction'))->render();
+
+            // Create a new Dompdf instance
+            $dompdf = new Dompdf();
+
+            // Load the HTML content into Dompdf
+            $dompdf->loadHtml($html);
+
+            // Set paper size and orientation (optional)
+            $dompdf->setPaper('A4', 'portrait');
+
+            // Render the PDF
+            $dompdf->render();
+
+            // Generate a unique filename for the PDF
+            $filename = 'invoice_' . $transaction->id . '.pdf';
+
+            // Get the PDF content
+            $pdfContent = $dompdf->output();
+
+            // Store the PDF content to a temporary file
+            $tempFilePath = storage_path('app/temp/' . $filename);
+            file_put_contents($tempFilePath, $pdfContent);
+
+            // Generate the URL to the temporary file
+            $fileUrl = Storage::url('temp/' . $filename);
+
+            // Return the response with the PDF file for preview
+            return response()->file($tempFilePath, [
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+                'target' => '_blank',
+            ]);
+
         
     }
     
