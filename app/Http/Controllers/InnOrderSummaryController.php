@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Inn;
 use App\Models\Room;
+use App\Models\RoomRate;
 use App\Models\Freebie;
 use App\Models\InventoryManagement;
 use App\Models\OrderDetail;
@@ -15,6 +16,7 @@ use App\Models\User;
 use App\Models\Transaction;
 use App\Models\Reservation;
 use App\Models\Category;
+use App\Models\POS_Transaction;
 use Illuminate\Support\Facades\Auth;
 
 class InnOrderSummaryController extends Controller
@@ -62,6 +64,7 @@ class InnOrderSummaryController extends Controller
      */
     public function store(Request $request)
     {
+
         OrderSummary::create([
             'total_amount' => $request->total,
             'payment' => $request->payment, 
@@ -78,6 +81,13 @@ class InnOrderSummaryController extends Controller
         foreach($order_details as $order_detail)
             $total = $total + $order_detail->subtotal;
         $rooms = Room::where('inn_id', $request->inn_id)->get();
+
+        POS_Transaction::create([
+            'order_number' => $request->order_number,
+            'transaction_id'=>$request->transaction_id, 
+            'total_amount'=>$request->total,
+            'inn_id' => $request->inn_id,
+        ]);
         return redirect('/user/dashboard/')
         ->with('products', $products)
         ->with('rooms', $rooms)
@@ -133,20 +143,53 @@ class InnOrderSummaryController extends Controller
     }
 
     public function pay_order_summary(string $id) {
-        $order_summary = OrderSummary::where('inn_id', $id)->where('is_deleted', 0)->get();
-        $products = Product::where('inn_id', $id)->where('is_deleted', 0)->get();
-        $order_number = count($order_summary) > 0 ? 'vcw-'.$id.'-ams-'.$order_summary->last()->id+1 : 'vcw-'.$id.'-ams-1';
-        $order_details = OrderDetail::where('inn_id', $id)->where('order_number', $order_number)->where('is_deleted', 0)->get();
-        $total = 0;
+        // $order_summary = OrderSummary::where('inn_id', $id)->where('is_deleted', 0)->get();
+        // $products = Product::where('inn_id', $id)->where('is_deleted', 0)->get();
+        // $order_number = count($order_summary) > 0 ? 'vcw-'.$id.'-ams-'.$order_summary->last()->id+1 : 'vcw-'.$id.'-ams-1';
+        // $order_details = OrderDetail::where('inn_id', $id)->where('order_number', $order_number)->where('is_deleted', 0)->get();
+        // $total = 0;
+        // foreach($order_details as $order_detail)
+        //     $total = $total + $order_detail->subtotal;
+        // $rooms = Room::where('inn_id', $id)->get();
+        // return view('user.order_summary.pay')
+        // ->with('products', $products)
+        // ->with('rooms', $rooms)
+        // ->with('total', $total)
+        // ->with('order_details', $order_details)
+        // ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id : 1)
+        // ->with('id', $id);
+
+        if (Auth::user()->status == 0) {
+            return view('user.preventEnter');
+        } elseif (Auth::user()->status == 1) {
+            $inn = Inn::where('user_id', Auth::user()->id)->get();
+            $order_summary = OrderSummary::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->get();
+            $products = Product::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->get();
+
+            $order_number = count($order_summary) > 0 ? 'vcw-' . $inn[0]->id . '-ams-' . $order_summary->last()->id + 1 : 'vcw-'.$inn[0]->id.'-ams-1';
+            $transactions = Transaction::where('inn_id', $inn[0]->id)->where('pos_transaction_number', $order_number)->get();
+
+            $order_details = OrderDetail::where('inn_id', $inn[0]->id)->where('order_number', $order_number)->where('is_deleted', 0)->get();
+             
+            $total = 0;
+            if(count($transactions) > 0)
+             $total += $transactions[0]->room_rate->rate;
+            
         foreach($order_details as $order_detail)
             $total = $total + $order_detail->subtotal;
-        $rooms = Room::where('inn_id', $id)->get();
-        return view('user.order_summary.pay')
-        ->with('products', $products)
-        ->with('rooms', $rooms)
-        ->with('total', $total)
-        ->with('order_details', $order_details)
-        ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id : 1)
-        ->with('id', $id);
+            $rooms = Room::where('inn_id', $inn[0]->id)->get();
+            $room_rates = RoomRate::all();
+            return view('user.order_summary.pay')
+                ->with('products', $products)
+                ->with('rooms', $rooms)
+                ->with('total', $total)
+                ->with('room_rates', $room_rates)
+                ->with('transactions', $transactions)
+                ->with('order_details', $order_details)
+                ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id + 1 : 1)
+                ->with('id', $inn[0]->id);
+        }
     }
 }
+
+
