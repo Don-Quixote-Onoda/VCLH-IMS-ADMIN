@@ -10,6 +10,7 @@
                         <h6 class="mb-4">Order Number: vcw-{{ $id }}-ams-{{ $last_id }}</h6>
                         <div class="table-responsive">
                             <table class="table table-hover">
+                                <p>POS</p>
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
@@ -25,7 +26,7 @@
                                                 <td>{{ $order_detail->product_id }}</td>
                                                 <td>{{ $order_detail->quantity }}</td>
                                                 <td>₱{{ number_format($order_detail->price, 2, '.', ',') }}</td>
-                                                <td>₱{{  number_format($order_detail->subtotal, 2, '.', ',') }}</td>
+                                                <td>{{ $order_detail->subtotal }}</td>
                                                 <td>
 
                                             </tr>
@@ -33,7 +34,29 @@
                                     @endif
                                 </tbody>
                             </table>
-                    
+                            <table class="table table-hover">
+                                <p>Transactions</p>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Room Number</th>
+                                        <th scope="col">Number of hours</th>
+                                        <th scope="col">Room Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (count($transactions) > 0)
+                                        @foreach ($transactions as $transaction)
+                                            <tr>
+                                                <td>#{{ $transaction->room->room_number }}</td>
+                                                <td>{{ $transaction->room_rate->number_of_hours }}</td>
+                                                <td>₱{{ number_format($transaction->room_rate->rate, 2, '.', ',') }}</td>
+                                                <td>
+
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>
@@ -48,14 +71,22 @@
 
                         <div>
                             <div class="mb-3">
-                                <select name="room_id" class="form-select mb-3" aria-label="Default select example"
+                                <select  name="room_id" class="form-select mb-3" aria-label="Default select example"
                                     required>
-                                    <option value="">Select Room #</option>
+                                    <option value="" >Select Room #</option>
                                     @if (!is_null($rooms))
+                                        
+                                        @if (count($transactions) > 0)
                                         @foreach ($rooms as $room)
-                                            <option value="{{ $room->id }}">Room #{{ $room->room_number }}
-                                            </option>
-                                        @endforeach
+                                        <option value="{{ $room->id }}" {{$room->id == $transactions[0]->room_id ? 'selected' : ''}}>Room #{{ $room->room_number }}
+                                        </option>
+                                    @endforeach
+                                        @else
+                                        @foreach ($rooms as $room)
+                                        <option value="{{ $room->id }}" >Room #{{ $room->room_number }}
+                                        </option>
+                                    @endforeach
+                                        @endif
                                     @endif
                                 </select>
                             </div>
@@ -66,6 +97,9 @@
                                     <input type="hidden" name="total" value="{{$total }}">
                             </div>
                             <input type="hidden" name="inn_id" value="{{ $id }}">
+                            @if(count($transactions) > 0)
+                            <input type="hidden" name="transaction_id" value="{{ $transactions[0]->id }}">
+                            @endif
                             <div class="mb-3">
                                 <label for="" class="mb-2">Payment: </label>
                                 <input type="number" id="payment" required name="payment" class="form-control mb-3" />

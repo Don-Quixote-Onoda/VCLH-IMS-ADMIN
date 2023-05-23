@@ -58,7 +58,6 @@ class TransactionManagerController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'inn_id' => 'required',
             'room_id' => 'required',
@@ -67,15 +66,14 @@ class TransactionManagerController extends Controller
         
         $transaction = new Transaction;
         $transaction->user_id = Auth::user()->id;
-        $transaction->customer_name = $request->name ?: null; // Assign null if name is empty
+        $transaction->customer_name = $request->name ?: ""; // Assign null if name is empty
         $transaction->inn_id = $request->inn_id;
         $transaction->room_id = $request->room_id;
         $transaction->status = 1;
+        $transaction->pos_transaction_number =  $request->pos_transaction_number != null ? $request->pos_transaction_number :  null;
         $transaction->room_rate_id = $request->room_rate_id;
         
-        if ($request->has('reservation_id')) {
-            $transaction->reservation_id = $request->reservation_id ?? null;
-        }
+            $transaction->reservation_id = $request->reservation_id != null ?? 34;
         
         $transaction->save();
         
