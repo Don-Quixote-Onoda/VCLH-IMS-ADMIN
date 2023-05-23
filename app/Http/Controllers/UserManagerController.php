@@ -38,11 +38,15 @@ class UserManagerController extends Controller
             $rooms = Room::where('inn_id', $inn[0]->id)->get();
             $room_rates = RoomRate::all();
             $transactions = Transaction::where('inn_id', $inn[0]->id)->where('pos_transaction_number', $order_number)->get();
+            $transactions = Transaction::where('inn_id', $inn[0]->id)
+            ->where('pos_transaction_number', $order_number)
+            ->latest()
+            ->first();
             return view('user.dashboard')
                 ->with('products', $products)
                 ->with('rooms', $rooms)
                 ->with('room_rates', $room_rates)
-                ->with('transactions', $transactions)
+                ->with('transactions', !is_null($transactions) ? [$transactions]: [])
                 ->with('order_details', $order_details)
                 ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id + 1 : 1)
                 ->with('id', $inn[0]->id);

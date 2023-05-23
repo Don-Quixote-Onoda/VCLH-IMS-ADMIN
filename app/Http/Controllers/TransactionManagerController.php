@@ -15,6 +15,7 @@ use App\Http\Controllers\CustomTCPDF;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use App\Models\OrderSummary;
 
 class TransactionManagerController extends Controller
 {
@@ -31,7 +32,6 @@ class TransactionManagerController extends Controller
         $freebies = Freebie::all();
         $transactions = Transaction::where('inn_id', $inns[0]->id)->get();
         $inn = Inn::where('user_id', Auth::user()->id)->get();
-
         return view('user.transactions.index')
         ->with('inns', $inns)
         ->with('rooms', $rooms)
@@ -58,12 +58,16 @@ class TransactionManagerController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'inn_id' => 'required',
             'room_id' => 'required',
             'room_rate_id' => 'required',
         ]);
-        
+        $inn = Inn::where('user_id', Auth::user()->id)->get();
+        $order_summary = OrderSummary::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->get();
+        $order_number = count($order_summary) > 0 ? 'vcw-' . $inn[0]->id . '-ams-' . $order_summary->last()->id + 1 : 'vcw-'.$inn[0]->id.'-ams-1';
+
         $transaction = new Transaction;
         $transaction->user_id = Auth::user()->id;
         $transaction->customer_name = $request->name ?: ""; // Assign null if name is empty
@@ -72,7 +76,7 @@ class TransactionManagerController extends Controller
         $transaction->status = 1;
         $transaction->pos_transaction_number =  $request->pos_transaction_number != null ? $request->pos_transaction_number :  null;
         $transaction->room_rate_id = $request->room_rate_id;
-        
+        $transaction->pos_transaction_number = $order_number;
             $transaction->reservation_id = $request->reservation_id != null ?? 34;
         
         $transaction->save();
@@ -81,7 +85,7 @@ class TransactionManagerController extends Controller
         $room->status = 1;
         $room->save();
         
-        return redirect()->back()->with('success', 'Added Successfully!');
+        return redirect('/user/dashboard');
         
     }
 
