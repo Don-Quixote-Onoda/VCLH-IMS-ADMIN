@@ -43,14 +43,14 @@
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editStatusModal{{ $reservation->id }}">Status</button>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <form action="/user/reservations-manager/{{ $reservation->id }}"
                                             method="post">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-danger d-inline">Delete</button>
                                         </form>
-                                    </td>
+                                    </td> -->
                                 </tr>
                                 <div class="modal fade" id="editStatusModal{{ $reservation->id }}" tabindex="-1" aria-labelledby="editStatusModalLabel{{ $reservation->id }}" aria-hidden="true">
         <div class="modal-dialog">

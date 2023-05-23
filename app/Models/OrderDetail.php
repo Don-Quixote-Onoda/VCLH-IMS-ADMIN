@@ -21,5 +21,11 @@ class OrderDetail extends Model
         'product_id', 
         'is_deleted', 
         'inn_id',
+        
     ];
+
+    public function transactions() {
+        return $this->hasMany('App\Models\Transaction');
+    }
+
 }

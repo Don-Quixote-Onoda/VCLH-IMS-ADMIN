@@ -74,12 +74,28 @@ class InnOrderSummaryController extends Controller
             'inn_id' => $request->inn_id,
             'is_deleted' => 0,
         ]);
+        
+        $selectedTransactionId = $request->selected_transaction_id;
+        
+        $selectedTransaction = Transaction::find($selectedTransactionId);
+        
+        if ($selectedTransaction) {
+            $selectedRoomId = $selectedTransaction->room_id;
+            $selectedRoomFee = $selectedTransaction->room->fee; // Assuming you have a relationship set up between Transaction and Room models
+        
+            // Now you can update the OrderSummary's total_amount with the selected room fee
+            $orderSummary->total_amount += $selectedRoomFee;
+            $orderSummary->room_id = $selectedRoomId;
+            $orderSummary->save();
+        }
+        
         $order_summary = OrderSummary::where('inn_id', $request->inn_id)->where('is_deleted', 0)->get();
         $products = Product::where('inn_id', $request->inn_id)->where('is_deleted', 0)->get();
         $order_details = OrderDetail::where('inn_id', $request->inn_id)->where('is_deleted', 0)->get();
         $total = 0;
-        foreach($order_details as $order_detail)
-            $total = $total + $order_detail->subtotal;
+        foreach($order_details as $order_detail) {
+            $total += $order_detail->subtotal;
+        }
         $rooms = Room::where('inn_id', $request->inn_id)->get();
 
         POS_Transaction::create([
@@ -89,12 +105,18 @@ class InnOrderSummaryController extends Controller
             'inn_id' => $request->inn_id,
         ]);
         return redirect('/user/dashboard/')
-        ->with('products', $products)
-        ->with('rooms', $rooms)
-        ->with('total', $total)
-        ->with('order_details', $order_details)
-        ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id+1 : 1)
-        ->with('id', $request->inn_id);
+            ->with('products', $products)
+            ->with('rooms', $rooms)
+            ->with('total', $total)
+            ->with('order_details', $order_details)
+            ->with('transactions', $transactions) // Pass the transactions to the view
+            ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id + 1 : 1)
+            ->with('id', $request->inn_id)
+            ->with('selectedTransactionId', $selectedTransactionId) // Pass the selected transaction ID to the view for display or further processing
+            ->with('selectedRoomId', $selectedRoomId) // Pass the selected room ID to the view
+            ->with('selectedRoomFee', $selectedRoomFee); // Pass the selected room fee to the view
+        
+    
     }
 
     /**
