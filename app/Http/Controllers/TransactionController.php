@@ -77,7 +77,9 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+         $transaction = Transaction::find($id);
+
+         return view('user.dashboard', compact('transaction'));
     }
 
     /**

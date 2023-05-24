@@ -66,15 +66,15 @@ class InnOrderDetailsController extends Controller
         $product->quantity = $product->quantity - $request->quantity;
         $product->save();
 
-OrderDetail::create([
-    'order_number' => $request->order_number,
-    'quantity' => $request->quantity,
-    'price' => $product->price,
-    'subtotal' => $request->quantity * $product->price,
-    'product_id' => $request->product_id, 
-    'inn_id' => $request->id,
-    'is_deleted' => 0
-]);
+        OrderDetail::create([
+            'order_number' => $request->order_number,
+            'quantity' => $request->quantity,
+            'price' => $product->price,
+            'subtotal' => $request->quantity * $product->price,
+            'product_id' => $request->product_id, 
+            'inn_id' => $request->id,
+            'is_deleted' => 0
+        ]);
 
     $order_summary = OrderSummary::where('inn_id', $request->id)->where('is_deleted', 0)->get();
     $products = Product::where('inn_id', $request->id)->where('is_deleted', 0)->get();

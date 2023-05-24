@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Inn;
 use App\Models\Room;
 use App\Models\RoomRate;
+use App\Models\Product;
 use App\Models\Freebie; 
 use App\Models\Transaction;
 use App\Http\Controllers\CustomTCPDF; 
@@ -140,7 +141,130 @@ class TransactionManagerController extends Controller
     public function show($id)
     {
         //
+      
     }
+
+    public function showPosView($id)
+    {
+        $transaction = Transaction::find($id);
+         $products = Product::all();
+
+         return view('user.transactions.pos')
+         ->with('transaction', $transaction)
+         ->with('products', $products);
+         }
+
+         public function addToTransaction(Request $request, $id)
+         {
+             // Retrieve the transaction and product
+             $transaction = Transaction::find($id);
+             $productId = $request->input('product');
+             $product = Product::find($productId);
+         
+             if ($transaction && $product) {
+                 // Retrieve the selected products from the session
+                 $selectedProducts = session('selectedProducts', []);
+         
+                 // Add the new product to the selected products array
+                 $selectedProducts[] = [
+                     'name' => $product->name,
+                     'quantity' => $request->input('quantity'),
+                     'price' => $product->price,
+                 ];
+         
+                 // Calculate the total price
+                 $totalPrice = session('totalPrice', $transaction->room_rate->rate);
+                 $totalPrice += $product->price * $request->input('quantity');
+         
+                 // Store the updated selected products and total price in the session
+                 session(['selectedProducts' => $selectedProducts]);
+                 session(['totalPrice' => $totalPrice]);
+         
+                 return redirect()->back()->with('success', 'Product added to selected products successfully!');
+             } else {
+                 return redirect()->back()->with('error', 'Failed to add product to selected products.');
+             }
+         }
+         
+         
+
+         
+         public function processCheckout(Request $request, $id)
+         {
+             // Retrieve the transaction with the given ID
+             $transaction = Transaction::findOrFail($id);
+         
+             // Retrieve the payment input from the request
+             $paymentInput = $request->input('paymentInput');
+         
+             // Calculate the total amount
+             $totalAmount = session('totalPrice', $transaction->room_rate->rate);
+         
+             // Calculate the change
+             $change = $paymentInput - $totalAmount;
+         
+             // Update the transaction status
+             $transaction->status = 'completed';
+             $transaction->save();
+         
+             // Store the payment details
+             $transaction->payment()->create([
+                 'amount' => $totalAmount,
+                 'payment_input' => $paymentInput,
+                 'change' => $change,
+             ]);
+
+             $transaction->delete();
+         
+             // Generate the PDF
+             $pdf = $this->generatePDF($transaction, $totalAmount, $paymentInput, $change);
+
+            // Clear the session data
+            $request->session()->forget(['totalPrice', 'selectedProducts']);
+
+             // Return the PDF as a response
+             return $pdf->stream('checkout.pdf');
+         }
+
+         private function generatePDF($transaction, $totalAmount, $paymentInput, $change)
+        {
+            // Create a new Dompdf instance
+            $dompdf = new Dompdf();
+
+            // Set options for the PDF generation (if needed)
+            
+            // Set any options you require, such as font paths, etc.
+            // $options->set...
+
+            // Assign the options to the Dompdf instance
+
+            // Prepare the data for the PDF
+            $data = [
+                'transaction' => $transaction,
+                'totalAmount' => $totalAmount,
+                'paymentInput' => $paymentInput,
+                'change' => $change,
+            ];
+
+            // Render the view to HTML
+            $html = view('pdf.checkout', $data)->render();
+
+            // Load the HTML into Dompdf
+            $dompdf->loadHtml($html);
+
+            // Set the paper size and orientation (optional)
+            $dompdf->setPaper('A4', 'portrait');
+
+            // Render the PDF
+            $dompdf->render();
+
+            // Return the generated PDF
+            return $dompdf;
+        }
+         
+         
+         
+
 
     /**
      * Show the form for editing the specified resource.

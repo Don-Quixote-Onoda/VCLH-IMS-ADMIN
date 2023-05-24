@@ -88,8 +88,9 @@ class InnOrderSummaryController extends Controller
             $orderSummary->room_id = $selectedRoomId;
             $orderSummary->save();
         }
-        
         $order_summary = OrderSummary::where('inn_id', $request->inn_id)->where('is_deleted', 0)->get();
+        $order_number = count($order_summary) > 0 ? 'vcw-' . $request->inn_id . '-ams-' . $order_summary->last()->id + 1 : 'vcw-'.$request->inn_id.'-ams-1';
+        
         $products = Product::where('inn_id', $request->inn_id)->where('is_deleted', 0)->get();
         $order_details = OrderDetail::where('inn_id', $request->inn_id)->where('is_deleted', 0)->get();
         $total = 0;
@@ -97,25 +98,31 @@ class InnOrderSummaryController extends Controller
             $total += $order_detail->subtotal;
         }
         $rooms = Room::where('inn_id', $request->inn_id)->get();
-
+        $transactions = Transaction::where('inn_id', $request->inn_id)->where('pos_transaction_number', $order_number)->get();
         POS_Transaction::create([
             'order_number' => $request->order_number,
             'transaction_id'=>$request->transaction_id, 
             'total_amount'=>$request->total,
             'inn_id' => $request->inn_id,
         ]);
-        return redirect('/user/dashboard/')
+        $inn = Inn::where('user_id', Auth::user()->id)->get();
+        $order_summary = OrderSummary::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->get();
+        $products = Product::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->get();
+
+        $order_number = count($order_summary) > 0 ? 'vcw-' . $inn[0]->id . '-ams-' . $order_summary->last()->id + 1 : 'vcw-'.$inn[0]->id.'-ams-1';
+
+        $order_details = OrderDetail::where('inn_id', $inn[0]->id)->where('order_number', $order_number)->where('is_deleted', 0)->get();
+        $rooms = Room::where('inn_id', $inn[0]->id)->get();
+        $room_rates = RoomRate::all();
+        $transactions = Transaction::where('inn_id', $inn[0]->id)->where('pos_transaction_number', $order_number)->get();
+        return view('user.dashboard')
             ->with('products', $products)
             ->with('rooms', $rooms)
-            ->with('total', $total)
+            ->with('room_rates', $room_rates)
+            ->with('transactions', $transactions)
             ->with('order_details', $order_details)
-            ->with('transactions', $transactions) // Pass the transactions to the view
             ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id + 1 : 1)
-            ->with('id', $request->inn_id)
-            ->with('selectedTransactionId', $selectedTransactionId) // Pass the selected transaction ID to the view for display or further processing
-            ->with('selectedRoomId', $selectedRoomId) // Pass the selected room ID to the view
-            ->with('selectedRoomFee', $selectedRoomFee); // Pass the selected room fee to the view
-        
+            ->with('id', $inn[0]->id);
     
     }
 

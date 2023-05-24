@@ -31,9 +31,7 @@
                                 
                     @endif
                     @if (Auth::user()->role == 2)
-                        <a href="/user/dashboard"
-                            class="nav-item nav-link {{ request()->is('user/dashboard') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>POS/Transaction</a>
+                        
                         <a href="/user/rooms-manager"
                             class="nav-item nav-link {{ request()->is('user/rooms-manager') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Rooms</a>

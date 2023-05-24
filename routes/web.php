@@ -68,6 +68,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin','auth']], function
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function() {
+    Route::post('/transactions-manager/{id}/checkout', 'TransactionManagerController@processCheckout')->name('transactions.processCheckout');
+    Route::post('/transactions-manager/{id}/add-product', 'TransactionManagerController@addToTransaction')->name('transactions.addProduct');
+    Route::get('/transactions-manager/{id}/pos', 'TransactionManagerController@showPosView')->name('transactions.pos');
+    Route::post('/transactions-manager/{id}/add-product', 'TransactionManagerController@addToTransaction')->name('transactions.addProduct');
+    Route::post('/transactions-manager/{id}/checkout', 'TransactionManagerController@checkout')->name('transactions.checkout');
+    Route::post('/transactions-manager/{id}/checkout', 'TransactionManagerController@processCheckout')->name('checkout.process');
     Route::get('dashboard', 'UserManagerController@index')->name('user.dashboard');
     Route::get('profile', 'UserController@profile')->name('user.dashboard.profile');
     Route::get('settings', 'UserController@settings')->name('user.dashboard.settings');
@@ -91,6 +97,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function()
     Route::resource('order-summary', 'InnOrderSummaryController');
     Route::resource('inventory-management', 'InnInventoryManagementController');
     Route::get('pay_order_summary/{id}', 'InnOrderSummaryController@pay_order_summary');
+
     
 
 

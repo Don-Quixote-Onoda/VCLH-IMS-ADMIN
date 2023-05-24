@@ -23,4 +23,10 @@ class Product extends Model
         'inn_id',
         'is_deleted',
     ];
+
+
+    public function transaction()
+{
+    return $this->belongsTo(Transaction::class);
+}
 }

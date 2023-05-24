@@ -16,10 +16,10 @@
                                         <h3>Point of Sale</h3>
                                         <select name="product_id" class="form-select mb-3"
                                             aria-label="Default select example" required>
-                                            <option value="">Select Room</option>
+                                            <option value="">Select Products</option>
                                             @if (!is_null($products))
                                                 @foreach ($products as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->name }} - {{$product->category_id}}
+                                                    <option value="{{ $product->id }}">{{ $product->name }}
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -53,29 +53,33 @@
                                 @csrf
                                 <input type="hidden" name="inn_id" value="{{ $id }}">
                                 <input type="hidden" name="pos_transaction_number" value="vcw-{{$id}}-ams-{{$last_id}}">
-
+                                   
                                 <div>
                                     <div class="mb-3">
                                         <h3>Add Room Transaction</h3>
-                                        <select name="room_id" class="form-select mb-3"
-                                            aria-label="Default select example" required>
-                                            <option value="">Select Room</option>
-                                            @if (!is_null($rooms))
-                                                @foreach ($rooms as $room)
-                                                    <option value="{{ $room->id }}">Room Number #{{ $room->room_number }}
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                        <select name="room_rate_id" class="form-select mb-3"
-                                            aria-label="Default select example" required>
-                                            <option value="">Select Room Rates</option>
-                                            @if (!is_null($room_rates))
-                                                @foreach ($room_rates as $room_rate)
-                                                    <option value="{{ $room_rate->id }}">{{ $room_rate->number_of_hours }}hrs - {{$room_rate->rate}}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                        <table class="table table-hover">
+                                        <p>Transactions</p>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Room Number</th>
+                                                <th scope="col">Number of hours</th>
+                                                <th scope="col">Room Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if (count($transactions) > 0)
+                                        @foreach ($transactions as $transaction)
+                                            <tr>
+                                                <td>#{{ $transaction->room->room_number }}</td>
+                                                <td>{{ $transaction->room_rate->number_of_hours }}</td>
+                                                <td>₱{{ number_format($transaction->room_rate->rate, 2, '.', ',') }}</td>
+                                                <td>
+    
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                        </tbody>
+                                    </table>
                                     </div>
                                    
                                    
@@ -124,17 +128,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (count($transactions) > 0)
-                                                @foreach ($transactions as $transaction)
-                                                    <tr>
-                                                        <td>#{{ $transaction->room->room_number }}</td>
-                                                        <td>{{ $transaction->room_rate->number_of_hours }}</td>
-                                                        <td>₱{{ number_format($transaction->room_rate->rate, 2, '.', ',') }}</td>
-                                                        <td>
+                                        @if (count($transactions) > 0)
+                                        @foreach ($transactions as $transaction)
+                                            <tr>
+                                                <td>#{{ $transaction->room->room_number }}</td>
+                                                <td>{{ $transaction->room_rate->number_of_hours }}</td>
+                                                <td>₱{{ number_format($transaction->room_rate->rate, 2, '.', ',') }}</td>
+                                                <td>
     
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                         </tbody>
                                     </table>
                                     <a type="submit" href="/user/pay_order_summary/{{$id}}" class="btn btn-primary">Pay</a>

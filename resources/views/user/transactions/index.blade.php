@@ -39,8 +39,9 @@
                                                 <td>{{ $transaction->room_rate->number_of_hours }} hours</td>
                                                 <td>PHP{{ $transaction->room_rate->rate }}</td>
                                                 <td>
-                                                    <a href="/user/transactions-manager/{{ $transaction->id }}/print"
-                                                        class="btn btn-success" target="_blank" >Print Invoice</a>
+                                                <a href="/user/transactions-manager/{{ $transaction->id }}/pos"
+                                                     class="btn btn-primary">POS</a>
+                                                 
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -50,6 +51,8 @@
                         </div>
                     </div>
                 </div>
+
+                
 
                 <div class="modal fade" id="addNewTransaction" data-bs-backdrop="static" data-bs-keyboard="false"
                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
