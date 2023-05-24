@@ -195,9 +195,14 @@ class TransactionManagerController extends Controller
          
          public function processCheckout(Request $request, $id)
          {
+
              // Retrieve the transaction with the given ID
              $transaction = Transaction::findOrFail($id);
          
+             $room = Room::find($transaction->room_id);
+             $room->status = 0;
+             $room->save();
+
              // Retrieve the payment input from the request
              $paymentInput = $request->input('paymentInput');
          
@@ -208,7 +213,7 @@ class TransactionManagerController extends Controller
              $change = $paymentInput - $totalAmount;
          
              // Update the transaction status
-             $transaction->status = 'completed';
+             $transaction->status = 1;
              $transaction->save();
          
              // Store the payment details
