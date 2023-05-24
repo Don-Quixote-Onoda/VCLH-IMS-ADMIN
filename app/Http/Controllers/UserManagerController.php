@@ -41,7 +41,7 @@ class UserManagerController extends Controller
                 ->with('products', $products)
                 ->with('rooms', $rooms)
                 ->with('room_rates', $room_rates)
-                ->with('transactions', $transactions)
+                ->with('transactions', !is_null($transactions) ? [$transactions]: [])
                 ->with('order_details', $order_details)
                 ->with('last_id', count($order_summary) > 0 ? $order_summary->last()->id + 1 : 1)
                 ->with('id', $inn[0]->id);
