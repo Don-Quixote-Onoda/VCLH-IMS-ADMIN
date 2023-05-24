@@ -8,16 +8,16 @@
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
-                                <tr class="row mx-0">
-                                    <th scope="col" class="col-sm-2 ms-2">status</th>
-                                    <th scope="col" class="col-sm-9">username</th>
+                                <tr >
+                                    <th scope="col">status</th>
+                                    <th scope="col">username</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (count($users) > 0)
                                     @foreach ($users as $user)
-                                    <tr class="row mx-0">
-                                        <td class="col-sm-2 ms-2">
+                                    <tr >
+                                        <td>
                                             <div class="form-check form-switch">
                                                 <form action="/admin/users-admin/{{$user->id}}" id="formName" method="get">
                                                     @csrf
@@ -27,7 +27,7 @@
                                                 </form>
                                             </div>
                                         </td>
-                                        <td class="col-sm-9">{{$user->name}}</td>
+                                        <td>{{$user->name}}</td>
                                     </tr>
                                     @endforeach                                
                                 @endif

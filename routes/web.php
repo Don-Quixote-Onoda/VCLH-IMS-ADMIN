@@ -28,7 +28,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin','auth']], function() {
-    Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
+    Route::get('dashboard', 'InnController@index')->name('admin.dashboard');
     Route::get('profile', 'AdminController@profile')->name('admin.dashboard.profile');
     Route::get('settings', 'AdminController@settings')->name('admin.dashboard.settings');
     Route::resource('inns-admin', 'InnController');
@@ -74,7 +74,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function()
     Route::post('/transactions-manager/{id}/add-product', 'TransactionManagerController@addToTransaction')->name('transactions.addProduct');
     Route::post('/transactions-manager/{id}/checkout', 'TransactionManagerController@checkout')->name('transactions.checkout');
     Route::post('/transactions-manager/{id}/checkout', 'TransactionManagerController@processCheckout')->name('checkout.process');
-    Route::get('dashboard', 'UserManagerController@index')->name('user.dashboard');
+    Route::get('dashboard', 'RoomManagerController@index')->name('user.dashboard');
     Route::get('profile', 'UserController@profile')->name('user.dashboard.profile');
     Route::get('settings', 'UserController@settings')->name('user.dashboard.settings');
     Route::resource('rooms-manager', 'RoomManagerController');

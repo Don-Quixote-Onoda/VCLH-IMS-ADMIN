@@ -49,6 +49,7 @@ class InnController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $this->validate($request, [
             'inn_name' => 'required',
             'number_of_rooms' => 'required',

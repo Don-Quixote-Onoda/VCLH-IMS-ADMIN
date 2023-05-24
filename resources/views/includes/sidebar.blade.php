@@ -19,21 +19,21 @@
                 </div>
                 <div class="navbar-nav w-100">
                     @if (Auth::user()->role == 1)
-                        <a href="/admin/dashboard"
+                        {{-- <a href="/admin/dashboard"
                             class="nav-item nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                                class="fa fa-tachometer-alt me-2"></i>Dashboard</a> --}}
                         <a href="/admin/users-admin"
                             class="nav-item nav-link {{ request()->is('admin/users-admin') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>User</a>
-                        <a href="/admin/inns-admin"
-                            class="nav-item nav-link {{ request()->is('admin/inns-admin') ? 'active' : '' }}"><i
+                        <a href="/admin/dashboard"
+                            class="nav-item nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Inns</a>
                                 
                     @endif
                     @if (Auth::user()->role == 2)
                         
-                        <a href="/user/rooms-manager"
-                            class="nav-item nav-link {{ request()->is('user/rooms-manager') ? 'active' : '' }}"><i
+                        <a href="/user/dashboard"
+                            class="nav-item nav-link {{ request()->is('user/dashboard') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Rooms</a>
                         <a href="/user/transactions-manager"
                             class="nav-item nav-link {{ request()->is('user/transactions-manager') ? 'active' : '' }}"><i
