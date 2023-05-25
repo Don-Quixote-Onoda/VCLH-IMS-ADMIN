@@ -10,7 +10,7 @@
 
                 {{-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addNewRoom">Add New Room</button> --}}
                 <a href="/user/rooms-manager/create" class="btn btn-outline-primary">Add New Room</a>
-                <div class="row mt-3">
+                <div class="row mt-3 overflow-scroll ">
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-secondary rounded h-100 p-4">
                             <h6 class="mb-4">Rooms Table</h6>
