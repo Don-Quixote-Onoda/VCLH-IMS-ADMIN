@@ -42,7 +42,9 @@
                             class="nav-item nav-link {{ request()->is('user/reservations-manager') ? 'active' : '' }}"><i
                                 class="fa fa-tachometer-alt me-2"></i>Reservation</a>
                         
-                        
+                                <a href="/user/summary-reports"
+                            class="nav-item nav-link {{ request()->is('summary-reports') ? 'active' : '' }}"><i
+                                class="fa fa-tachometer-alt me-2"></i>Summary Reports</a>
                         <a class="dropdown nav-item nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i
                                 class="fa fa-tachometer-alt me-2"></i>POS/Inv
                             <i class="fa fa-caret-down bg-transparent"></i>

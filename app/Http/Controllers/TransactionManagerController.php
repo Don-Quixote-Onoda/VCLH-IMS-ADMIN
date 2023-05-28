@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Dompdf\Dompdf;
-Use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use TCPDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -224,15 +224,19 @@ class TransactionManagerController extends Controller
              ]);
 
              $transaction->delete();
-         
+             $request->session()->forget(['totalPrice', 'selectedProducts']);
+
              // Generate the PDF
              $pdf = $this->generatePDF($transaction, $totalAmount, $paymentInput, $change);
-
+             $pdf->stream('checkout.pdf');
+             return redirect('/user/transactions-manager');
+             
             // Clear the session data
-            $request->session()->forget(['totalPrice', 'selectedProducts']);
 
              // Return the PDF as a response
-             return $pdf->stream('checkout.pdf');
+             
+
+            //  return view('user.dashboard');
          }
 
          private function generatePDF($transaction, $totalAmount, $paymentInput, $change)

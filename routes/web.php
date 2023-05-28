@@ -69,6 +69,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin','auth']], function
 
 Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function() {
     Route::post('/transactions-manager/{id}/checkout', 'TransactionManagerController@processCheckout')->name('transactions.processCheckout');
+    Route::get('/summary-reports', function() {
+        return view('user.dashboard');
+    });
     Route::post('/transactions-manager/{id}/add-product', 'TransactionManagerController@addToTransaction')->name('transactions.addProduct');
     Route::get('/transactions-manager/{id}/pos', 'TransactionManagerController@showPosView')->name('transactions.pos');
     Route::post('/transactions-manager/{id}/add-product', 'TransactionManagerController@addToTransaction')->name('transactions.addProduct');
