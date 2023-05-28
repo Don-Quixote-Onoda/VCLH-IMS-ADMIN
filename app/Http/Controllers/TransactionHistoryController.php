@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\TransactionHistory;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Inn;
-use App\Models\Room;
-use App\Models\RoomRate;
+use Illuminate\Support\Facades\DB;
 
-class ViewersController extends Controller
+class TransactionHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +19,16 @@ class ViewersController extends Controller
      */
     public function index()
     {
-        $inns = Inn::all();
-        $rooms = Room::where('status', 0);
-        return view('inns.index')
-        ->with('inns', $inns)
-        ->with('rooms', $rooms);
+        $id = Auth::user()->id;
+        $inns = Inn::select('*')->where('user_id', $id)->get();
+        $transaction_histories = TransactionHistory::where('inn_id', $inns[0]->id)->get();
+        $transactionData = DB::table('transaction_histories')
+            ->join('transactions', 'transaction_histories.transaction_id', '=', 'transactions.id')
+            ->select('transaction_histories.*', 'transactions.*')
+            ->where('transaction_histories.inn_id', $inns[0]->id)
+            ->get();
+        return view('user.transaction_history.index')
+        ->with('transaction_histories', $transactionData);
     }
 
     /**
@@ -52,12 +60,7 @@ class ViewersController extends Controller
      */
     public function show($id)
     {
-        $rooms = Room::where('inn_id', $id)->get();
-        $inn = Inn::find($id);
-        
-        return view('inns.show')
-        ->with('inn', $inn)
-        ->with('rooms', $rooms);
+        //
     }
 
     /**
@@ -92,14 +95,5 @@ class ViewersController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function search(Request $request) {
-
-        $inns = Inn::where('inn_name', 'like', '%' . $request->keyword . '%')->get();
-        $rooms = Room::all();
-        return view('inns.index')
-        ->with('inns', $inns)
-        ->with('rooms', $rooms);
     }
 }

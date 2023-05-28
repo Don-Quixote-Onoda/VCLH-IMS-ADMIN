@@ -28,7 +28,7 @@ class ReservationManagerController extends Controller
         $transactions = Transaction::latest()->get();
         $reservations = Reservation::where('inn_id', $inns[0]->id)->get();
         $inn = Inn::where('user_id', Auth::user()->id)->get();
-
+        
         return view('user.reservations.index')
         ->with('inns', $inns)
         ->with('rooms', $rooms)

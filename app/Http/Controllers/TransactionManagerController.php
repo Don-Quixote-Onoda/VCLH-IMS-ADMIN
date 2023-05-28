@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use App\Models\OrderSummary;
+use App\Models\TransactionHistory;
 
 class TransactionManagerController extends Controller
 {
@@ -86,7 +87,7 @@ class TransactionManagerController extends Controller
         $room->status = 1;
         $room->save();
         
-        return redirect('/user/dashboard');
+        return redirect()->back();
         
     }
 
@@ -150,13 +151,15 @@ class TransactionManagerController extends Controller
 
     public function showPosView($id)
     {
+        $user_id = Auth::user()->id;
+        $inns = Inn::select('*')->where('user_id', $user_id)->get();
         $transaction = Transaction::find($id);
-         $products = Product::all();
+        $products = Product::where('inn_id', $inns[0]->id)->where('is_deleted', 0)->get();
 
-         return view('user.transactions.pos')
-         ->with('transaction', $transaction)
-         ->with('products', $products);
-         }
+        return view('user.transactions.pos')
+        ->with('transaction', $transaction)
+        ->with('products', $products);
+    }
 
          public function addToTransaction(Request $request, $id)
          {
@@ -164,6 +167,8 @@ class TransactionManagerController extends Controller
              $transaction = Transaction::find($id);
              $productId = $request->input('product');
              $product = Product::find($productId);
+             $product->quantity = $product->quantity - $request->quantity;
+             $product->save();
          
              if ($transaction && $product) {
                  // Retrieve the selected products from the session
@@ -195,7 +200,6 @@ class TransactionManagerController extends Controller
          
          public function processCheckout(Request $request, $id)
          {
-
              // Retrieve the transaction with the given ID
              $transaction = Transaction::findOrFail($id);
          
@@ -213,9 +217,15 @@ class TransactionManagerController extends Controller
              $change = $paymentInput - $totalAmount;
          
              // Update the transaction status
+             $transaction->payment_amount = $totalAmount;
              $transaction->status = 1;
              $transaction->save();
-         
+             $user_id = Auth::user()->id;
+             $inns = Inn::select('*')->where('user_id', $user_id)->get();
+             TransactionHistory::create([
+                'transaction_id'=> $transaction->id,
+                'inn_id' => $inns[0]->id
+             ]);
              // Store the payment details
              $transaction->payment()->create([
                  'amount' => $totalAmount,
@@ -223,13 +233,17 @@ class TransactionManagerController extends Controller
                  'change' => $change,
              ]);
 
+           
+
+             
              $transaction->delete();
              $request->session()->forget(['totalPrice', 'selectedProducts']);
 
              // Generate the PDF
-             $pdf = $this->generatePDF($transaction, $totalAmount, $paymentInput, $change);
+             $pdf = $this->generatePDF($transaction, $totalAmount, $paymentInput, $change, $inns);
              $pdf->stream('checkout.pdf');
              return redirect('/user/transactions-manager');
+            
              
             // Clear the session data
 
@@ -239,7 +253,7 @@ class TransactionManagerController extends Controller
             //  return view('user.dashboard');
          }
 
-         private function generatePDF($transaction, $totalAmount, $paymentInput, $change)
+         private function generatePDF($transaction, $totalAmount, $paymentInput, $change, $inns)
         {
             // Create a new Dompdf instance
             $dompdf = new Dompdf();
@@ -257,6 +271,7 @@ class TransactionManagerController extends Controller
                 'totalAmount' => $totalAmount,
                 'paymentInput' => $paymentInput,
                 'change' => $change,
+                'inn' => $inns[0]
             ];
 
             // Render the view to HTML

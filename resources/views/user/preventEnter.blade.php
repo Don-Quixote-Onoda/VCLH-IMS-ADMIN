@@ -122,7 +122,7 @@
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-secondary rounded mx-auto row">
-                        <p class="text-center my-5">!--- Ooopss.. Your account is not yet verified. Just wait for the administrator to verify your account! hehe</p>
+                        <p class="text-center my-5">Your account is not yet verified. Just wait for the administrator to verify your account!</p>
                         <a class="btn btn-secondary btn-outline-light mx-auto" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Room as RoomModel;
 use App\Models\RoomRate as RoomRate;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Inn;
 
 class Room extends Component
 {
@@ -14,8 +16,11 @@ class Room extends Component
 
     public function render()
     {
+        $id = Auth::user()->id;
+        $inns = Inn::select('*')->where('user_id', $id)->get();
+        $rooms = RoomModel::select('*')->where('inn_id', $inns[0]->id)->where('status', 0)->get();
         return view('livewire.room', [
-            'rooms' => RoomModel::where('status', 0)->get(),
+            'rooms' => $rooms,
         ]);
     }
 

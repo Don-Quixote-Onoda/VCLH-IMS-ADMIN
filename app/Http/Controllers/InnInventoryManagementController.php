@@ -31,7 +31,7 @@ class InnInventoryManagementController extends Controller
         $freebies = Freebie::all();
         $transactions = Transaction::all();
         $reservations = Reservation::all();
-        $inventories = InventoryManagement::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->get();
+        $inventories = InventoryManagement::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
         $products = Product::where('inn_id', $inn[0]->id)->where('is_deleted', 0)->get();
 
          return view('user.inventory_management.index')

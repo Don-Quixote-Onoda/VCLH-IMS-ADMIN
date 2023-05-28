@@ -2,15 +2,16 @@
 
 @section('content')
 
-<div class="col-sm-6 col-xl-6">
+<div class="col-sm-12 p-5 col-xl-12">
     <h1>Point of Sale</h1>
     <p>For Room Number: {{ $transaction->room_rate->room->room_number }}</p>
 
-    <form action="{{ route('transactions.addProduct', $transaction->id) }}" method="POST">
+    <form action="{{ route('transactions.addProduct', $transaction->id) }}" class="mb-5" method="POST">
         @csrf
 
         <label for="product">Product:</label>
         <select name="product" id="product" class="form-control mb-3">
+        <option value="">Select Products</option>
             @foreach ($products as $product)
                 <option value="{{ $product->id }}">{{ $product->name }} - PHP{{ $product->price }}</option>
             @endforeach
@@ -23,7 +24,7 @@
     </form>
 
     <h2>Selected Products:</h2>
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Product</th>
@@ -41,6 +42,8 @@
             @endforeach
         </tbody>
     </table>
+    <h3>Room: # <span >{{  $transaction->room->room_number}}</span></h3>
+    <h3>Number of Hours: <span >{{  $transaction->room_rate->number_of_hours}}hrs</span></h3>
 
     <h3>Total Price: Php <span id="totalPrice">{{ session('totalPrice', $transaction->room_rate->rate) }}</span></h3>
 

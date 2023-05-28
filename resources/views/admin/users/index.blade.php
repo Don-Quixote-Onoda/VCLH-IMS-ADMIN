@@ -9,14 +9,22 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr >
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Inn Name</th>
                                     <th scope="col">status</th>
-                                    <th scope="col">username</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (count($users) > 0)
                                     @foreach ($users as $user)
                                     <tr >
+                                    <td>{{$user->name}}</td>
+                                    @if(count($user->inn) > 0)
+                                    <td>{{$user->inn[0]->inn_name}}</td>
+                                    @else
+                                    <td></td>
+                                    @endif
                                         <td>
                                             <div class="form-check form-switch">
                                                 <form action="/admin/users-admin/{{$user->id}}" id="formName" method="get">
@@ -27,7 +35,6 @@
                                                 </form>
                                             </div>
                                         </td>
-                                        <td>{{$user->name}}</td>
                                     </tr>
                                     @endforeach                                
                                 @endif

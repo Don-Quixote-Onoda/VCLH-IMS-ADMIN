@@ -3,11 +3,14 @@
     <a href="/admin/inns-admin" class="btn btn-primary my-5 ms-5">Back</a>
 
     {{-- Products --}}
+
     <div class="row d-flex mb-4 justify-content-center">
         <div class="col-11 ">
             <div class="bg-secondary rounded h-100 p-4">
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                     data-bs-target="#addNewReservation">Add New Products</button>
+                    <p class="text-danger">{{$error}}</p>
+
                 <div class="row mt-3 overflow-scroll ">
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-secondary rounded h-100 p-4">

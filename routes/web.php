@@ -99,6 +99,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['isUser','auth']], function()
     Route::resource('order-details', 'InnOrderDetailsController');
     Route::resource('order-summary', 'InnOrderSummaryController');
     Route::resource('inventory-management', 'InnInventoryManagementController');
+    Route::resource('transaction-history', 'TransactionHistoryController');
     Route::get('pay_order_summary/{id}', 'InnOrderSummaryController@pay_order_summary');
 
     

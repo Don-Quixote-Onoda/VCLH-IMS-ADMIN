@@ -34,45 +34,52 @@
                         
                         <a href="/user/dashboard"
                             class="nav-item nav-link {{ request()->is('user/dashboard') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>Rooms</a>
+                                class="fa fa-solid fa-hotel me-2"></i>Rooms</a>
                         <a href="/user/transactions-manager"
                             class="nav-item nav-link {{ request()->is('user/transactions-manager') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>Transactions</a>
+                                class="fa fa-money-check-alt me-2"></i>Transactions</a>
+                              
                         <a href="/user/reservations-manager"
                             class="nav-item nav-link {{ request()->is('user/reservations-manager') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>Reservation</a>
+                                class="fa fa-bed me-2"></i>Reservation</a>
                         
-                                <a href="/user/summary-reports"
+                                <!-- <a href="/user/summary-reports"
                             class="nav-item nav-link {{ request()->is('summary-reports') ? 'active' : '' }}"><i
-                                class="fa fa-tachometer-alt me-2"></i>Summary Reports</a>
+                                class="fa fa-tachometer-alt me-2"></i>Summary Reports</a> -->
                         <a class="dropdown nav-item nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i
-                                class="fa fa-tachometer-alt me-2"></i>POS/Inv
-                            <i class="fa fa-caret-down bg-transparent"></i>
+                                class="fa fa-calculator me-2"></i>POS/Inv
+                          
                             
                         </a>
                         <a href="/user/products/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
                             id="collapseExample">
-                            Products
+                            <i class="fa fa-shopping-bag me-2"></i>Products
+                            
                         </a>
                         <a href="/user/products-category/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
                             id="collapseExample">
-                            Products Category
+                            <i class="fa fa fa-tags me-2"></i>Category
+
+                            
                         </a>
 
-                        <a href="/user/order-details/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
+                        <!-- <a href="/user/order-details/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
                             id="collapseExample">
                             Order Details
                         </a>
                         <a href="/user/order-summary/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
                             id="collapseExample">
                             Order Summary
-                        </a>
+                        </a> -->
                         <a href="/user/inventory-management/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
                             id="collapseExample">
                             Inventory Management
                         </a>
 
-                        
+                        <a href="/user/transaction-history/" class="collapse  nav-item nav-link {{ request()->is('#') ? 'active' : '' }}"
+                            id="collapseExample">
+                            Transaction History
+                        </a>
 
     </a>     
                         

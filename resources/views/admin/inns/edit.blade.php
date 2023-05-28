@@ -134,7 +134,7 @@
                                 id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <button type="submit" class="btn btn-success">Save</button>
-                        <a href="/admin/inns-admin" class="btn btn-outline-primary">Back</a>
+                        <a href="/admin/inns-admin" class="btn btn-primary">Back</a>
                     </form>
                 </div>
             </div>

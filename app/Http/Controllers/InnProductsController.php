@@ -34,6 +34,7 @@ class InnProductsController extends Controller
         ->with('inn', $inn)
         ->with('products', $products)
         ->with('categories', $categories)
+        ->with('error', '')
         ->with('id',$inn[0]->id);
 
     }
@@ -56,6 +57,17 @@ class InnProductsController extends Controller
      */
     public function store(Request $request)
     {
+        $inn =  $inn = Inn::where('user_id', Auth::user()->id)->get();
+        $categories = Category::where('inn_id',$inn[0]->id)->where('is_deleted', 0)->get();
+        $products = Product::where('inn_id',$inn[0]->id)->where('is_deleted', 0)->get();
+        if($request->quantity < 1)
+            return view('user.products.index')
+            ->with('inn', $inn)
+            ->with('products', $products)
+            ->with('categories', $categories)
+            ->with('error', 'Quantity must be greater than 0!')
+            ->with('id',$inn[0]->id);
+
         $inn =  $inn = Inn::where('user_id', Auth::user()->id)->get();
         $this->validate($request, [
             'product_name' => 'required',

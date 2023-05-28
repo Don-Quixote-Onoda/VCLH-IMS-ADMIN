@@ -23,10 +23,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <!-- Main Stylesheet -->
     <link href="{{ asset('welcome_assets/css/style.css') }}" rel="stylesheet">
+    <!-- <script>
+        // Function to disable dates before a specific date
+        function disableDatesBefore(date) {
+            // Get today's date
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
 
+            // Disable dates before the specified date
+            if (date < today) {
+                return [false];
+            }
+            return [true];
+        }
+    </script> -->
+    <!-- <script>
+        // Function to disable dates before the current day
+        function disableDatesBeforeToday() {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            var todayFormatted = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("myDate").setAttribute("min", todayFormatted);
+        }
+
+        // Call the function on page load
+        window.addEventListener('DOMContentLoaded', disableDatesBeforeToday);
+    </script> -->
 </head>
 
-<body>
+<body >
 
     <!-- Navigation Start -->
     <!-- Header Start -->
@@ -94,7 +130,7 @@
                                         <div class="overlay-content">
                                             <h1 style="color: #b3b3b3;">Room. {{ $room->room_number }} </h1>
                                             <p>{{ $room->number_of_beds }}
-                                                {{ $room->number_of_beds > 1 ? ' beds' : ' bed' }} • Freebie:
+                                                {{ $room->number_of_beds > 1 ? ' beds' : ' bed' }} • Amenities:
                                                 @foreach (explode(',', $room->freebies) as $freebie)
                                                     {{ $freebie }}
                                                 @endforeach
@@ -137,7 +173,7 @@
                                                 <div>
                                                     <div class="mb-3">
                                                         <label for="" class="mb-2">Enter reservation date: </label>
-                                                        <input type="date" name="reservationDate" class="form-control mb-3" />
+                                                        <input type="date" id="myDate"  name="reservationDate" class="form-control mb-3"  onchange="this.setAttribute('min', this.value);" onfocus="this.removeAttribute('min');" onkeydown="return false;">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="" class="mb-2">Enter reservee name: </label>
@@ -331,7 +367,29 @@
         </div>
     </section>
     <!-- Footer End -->
+    <!-- <script>
+        // Set the minimum date to today
+        var currentDate = new Date().toISOString().split("T")[0];
+        document.getElementById("myDate").setAttribute("min", currentDate);
 
+        // Disable dates before a specific date
+        var disableBeforeDate = new Date("2023-01-01");
+        document.getElementById("myDate").addEventListener("input", function() {
+            this.setAttribute("onkeydown", "return false;");
+            this.setAttribute("onchange", "this.setAttribute('min', this.value);");
+            this.setAttribute("onfocus", "this.removeAttribute('min');");
+            this.datePickerValueChanged();
+        });
+
+        document.getElementById("myDate").datePickerValueChanged = function() {
+            var selectedDate = new Date(this.value);
+            var currentDate = new Date().toISOString().split("T")[0];
+
+            if (selectedDate < disableBeforeDate || selectedDate.toISOString().split("T")[0] < currentDate) {
+                this.value = "";
+            }
+        };
+    </script> -->
     <!-- jQuery -->
     <script src="{{ asset('welcome_assets/plugins/jQuery/jquery.min.js') }}"></script>
     <!-- Bootstrap JS -->
